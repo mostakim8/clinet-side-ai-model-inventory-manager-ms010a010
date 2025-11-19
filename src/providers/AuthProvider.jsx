@@ -37,12 +37,13 @@ const AuthProvider = ({ children }) => {
     };
 
 
-   //user update profile 
-    const updateUserProfile=(name,photoURL)=>{
-        return updateUserProfile(auth.currentUser,{
-            displayName:name,
+   // 🔑 FIX: Corrected function call to Firebase's updateProfile 
+    const updateUserProfile = (name, photoURL) => {
+        // Firebase Auth SDK-er shothik 'updateProfile' function call
+        return updateProfile(auth.currentUser, { 
+            displayName: name,
             photoURL: photoURL
-        })
+        });
     }
 
 
@@ -70,8 +71,9 @@ const AuthProvider = ({ children }) => {
         registerUser,
         loginUser,
         googleLogin,
-        updateUserProfile,
+        updateUserProfile, // Ekhon shothik function byabohar kora jabe
         auth,
+        
 
         // Include other auth methods (login, register) here later
     };

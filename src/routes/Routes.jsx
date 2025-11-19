@@ -12,6 +12,8 @@ import MyModels from "../pages/Model/MyModels";
 
 import PrivateRoute from "./PrivateRoute";
 import UpdateModel from "../pages/Model/UpdateModel";
+import ProfileUpdate from "../pages/ProfileUpdate/ProfileUpdate";
+import NotFound from "../pages/NotFound/NotFound404";
 
 const routes = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const routes = createBrowserRouter([
                 // use loader for data load
                 loader: ({ params }) => fetch(`http://localhost:5001/models/${params.id}`)
             },
+            {
+                path: "/profile",
+                element: <PrivateRoute><ProfileUpdate /></PrivateRoute>, // Private kora holo
+            },
+            {
+        path: '*',
+        element: <NotFound/>,
+      },
       // Add other public routes here (e.g., /models)
     ],
   },

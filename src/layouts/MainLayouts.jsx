@@ -3,6 +3,7 @@ import { Outlet, useLocation, Link } from "react-router-dom";
 import Navbar from "../component/shared/Navbar";
 import Footer from "../component/shared/Footer";
 
+// ব্যানার কম্পোনেন্ট (শুধুমাত্র হোম পেজের জন্য)
 const Banner = () => (
     <div className="hero bg-base-100 py-16 lg:py-24 border-b border-gray-200">
         <div className="hero-content text-center">
