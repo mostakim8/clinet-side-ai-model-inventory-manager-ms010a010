@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async'; 
 import { useAuth } from '../../providers/AuthProvider.jsx'; 
+// 🔑 Slider কম্পোনেন্ট ইম্পোর্ট করা হলো
+// import Slider from '../../component/Slider/Slider.jsx'; 
 
 // Server base URL 
 const SERVER_BASE_URL = 'http://localhost:5001'; 
@@ -96,90 +98,96 @@ export const Home = () => {
             <Helmet>
                 <title>AI Model Market - Discover</title>
             </Helmet>
-
-            <h1 className="text-4xl font-bold mb-4 text-center text-gray-800">
-                Discover the Best AI Models
-            </h1>
             
-            {/* 🔑 NEW: H4 and Search Bar Container */}
-            <div className="flex flex-col sm:flex-row justify-between  mb-10 px-4  py-4 rounded-lg gap-4 md:gap-0">
-                {/* H4 Title (Left Side) */}
-                <h4 className="text-2xl font-semibold text-primary mb-4 md:mb-0">
-                  Latest AI Models </h4>
+            {/* 🔑 স্লাইডার যুক্ত করা হলো */}
+            {/* <Slider />  */}
+            
+            {/* মেইন কন্টেন্ট ডিসপ্লে কন্টেইনার (Slider থেকে কিছুটা গ্যাপ দেওয়া হলো) */}
+            <div className="mt-8 px-4 sm:px-6 lg:px-8"> 
 
-                {/* Search Input Field (Right Side) */}
-                <div className="w-full sm:w-50"> {/* নির্দিষ্ট প্রস্থ (w-96) ব্যবহার করা হয়েছে */}
-                    <label className="input input-bordered flex items-center gap-2 w-full shadow-md bg-black-200 text-gray-400">
-                       
-                        <input
-                            type="text"
-                            placeholder="Search models by name or category..."
-                            className="grow"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </label>
+                <h1 className="text-4xl font-bold mb-4 text-center text-gray-800">
+                    Discover the Best AI Models
+                </h1>
+                
+                {/* 🔑 NEW: H4 and Search Bar Container */}
+                <div className="flex flex-col sm:flex-row justify-between mb-10 py-4 rounded-lg gap-4 md:gap-0">
+                    {/* H4 Title (Left Side) */}
+                    <h4 className="text-2xl font-semibold text-primary mb-4 md:mb-0">
+                      Latest AI Models </h4>
+
+                    {/* Search Input Field (Right Side) */}
+                    <div className="w-full sm:w-50"> 
+                        <label className="input input-bordered flex items-center gap-2 w-full shadow-md bg-black-200 text-gray-400">
+                        
+                            <input
+                                type="text"
+                                placeholder="Search models by name or category..."
+                                className="grow"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </label>
+                    </div>
                 </div>
-            </div>
-            {/* END H4 and Search Bar Container */}
+                {/* END H4 and Search Bar Container */}
 
-            {/* Display message if no models match the search */}
-            {searchTerm.length > 0 && filteredModels.length === 0 && (
-                <div className="text-center my-10 p-8 border-2 border-dashed border-gray-300 rounded-xl bg-base-100 max-w-xl mx-auto">
-                    <h3 className="text-2xl font-semibold text-gray-700">No Results Found 😔</h3>
-                    <p className="text-gray-500 mt-2">
-                        We couldn't find any models matching **"{searchTerm}"** in the name or category.
-                    </p>
-                    <button 
-                        onClick={() => setSearchTerm('')} 
-                        className="btn btn-sm btn-outline btn-primary mt-4"
-                    >
-                        Clear Search
-                    </button>
-                </div>
-            )}
+                {/* Display message if no models match the search */}
+                {searchTerm.length > 0 && filteredModels.length === 0 && (
+                    <div className="text-center my-10 p-8 border-2 border-dashed border-gray-300 rounded-xl bg-base-100 max-w-xl mx-auto">
+                        <h3 className="text-2xl font-semibold text-gray-700">No Results Found 😔</h3>
+                        <p className="text-gray-500 mt-2">
+                            We couldn't find any models matching **"{searchTerm}"** in the name or category.
+                        </p>
+                        <button 
+                            onClick={() => setSearchTerm('')} 
+                            className="btn btn-sm btn-outline btn-primary mt-4"
+                        >
+                            Clear Search
+                        </button>
+                    </div>
+                )}
 
-            {/* Use filteredModels for mapping */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Fetched models data is mapped here */}
-                {displayModels.map((model) => {
-                    return (
-                        <div key={model._id} className="card bg-gray-500  shadow-xl hover:shadow-2xl transition duration-300">
-                            <figure className="h-48 overflow-hidden">
-                                <img 
-                                    src={model.imageUrl || 'https://placehold.co/400x300/CCCCCC/666666?text=No+Image'} 
-                                    alt={model.modelName} 
-                                    className="w-full h-full object-cover"
-                                />
-                            </figure>
-                            <div className="card-body p-6">
-                                <h2 className="card-title text-xl text-white">{model.modelName}</h2>
-                                <p className="text-2xl font-bold text-accent">${parseFloat(model.price).toFixed(2)}</p>
-                                
-                                <div className="card-actions justify-end mt-4">
-                                    <Link 
-                                        to={`/model/${model._id}`} 
-                                        className="btn btn-primary btn-outline w-full"
-                                    >
-                                        View Details
-                                    </Link>
+                {/* Use filteredModels for mapping */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Fetched models data is mapped here */}
+                    {displayModels.map((model) => {
+                        return (
+                            <div key={model._id} className="card bg-gray-500 shadow-xl hover:shadow-2xl transition duration-300">
+                                <figure className="h-48 overflow-hidden">
+                                    <img 
+                                        src={model.imageUrl || 'https://placehold.co/400x300/CCCCCC/666666?text=No+Image'} 
+                                        alt={model.modelName} 
+                                        className="w-full h-full object-cover"
+                                    />
+                                </figure>
+                                <div className="card-body p-6">
+                                    <h2 className="card-title text-xl text-white">{model.modelName}</h2>
+                                    <p className="text-2xl font-bold text-accent">${parseFloat(model.price).toFixed(2)}</p>
+                                    
+                                    <div className="card-actions justify-end mt-4">
+                                        <Link 
+                                            to={`/model/${model._id}`} 
+                                            className="btn btn-primary btn-outline w-full"
+                                        >
+                                            View Details
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
-            </div>
-
-
-{/* 'Show All Models' Button (Only shown when not searching and there are more than 6 models) */}
-            {searchTerm === '' && models.length > 6 && (
-                <div className="text-center my-10">
-                    {/* এখানে একটি 'Show All Models' বাটন যোগ করা যেতে পারে, যা সমস্ত মডেল দেখাতে একটি নতুন Route-এ যেতে পারে বা বর্তমান 'searchTerm' স্টেট পরিবর্তন করতে পারে, যদি আপনার অন্য পেজ না থাকে। আপাতত, এটি একটি ডামি বাটন হিসেবে রাখা হলো। */}
-                    <Link to="/models" className="btn btn-secondary btn-lg shadow-lg">
-                        Show All {models.length} Models
-                    </Link>
+                        );
+                    })}
                 </div>
-            )}
+
+
+    {/* 'Show All Models' Button (Only shown when not searching and there are more than 6 models) */}
+                {searchTerm === '' && models.length > 6 && (
+                    <div className="text-center my-10">
+                        <Link to="/models" className="btn btn-secondary btn-lg shadow-lg">
+                            Show All {models.length} Models
+                        </Link>
+                    </div>
+                )}
+            </div>
 
         </div>
     );
