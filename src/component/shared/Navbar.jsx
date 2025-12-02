@@ -1,10 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider'; 
-// getAuth এবং signOut-এর ইমপোর্ট অপ্রয়োজনীয়, কারণ আমরা useAuth() থেকে logout ব্যবহার করছি।
 
 const Navbar = () => {
     // Auth context থেকে user info এবং logout ফাংশনটি destructure করা হলো
-    const { user, logout } = useAuth(); // 'logout' হবে, 'signOut' নয়
+    const { user, logout } = useAuth(); 
     const navigate = useNavigate();
 
     // Logout handler
@@ -19,13 +18,16 @@ const Navbar = () => {
         }
     };
 
-    // 🔑 UPDATED LOGIC: Common navigation links for both mobile and desktop
-    // এখন শুধু Home, View Models, এবং শর্তসাপেক্ষে Add Model থাকবে।
+    // 🔑 সংশোধিত লজিক: Home লিঙ্কটি শর্তসাপেক্ষ হবে
     const navLinks = (
         <>
-            <li><Link to="/">Home</Link></li>
-            {/* View Models: সকল মডেল দেখার জন্য একটি নতুন লিঙ্ক (ধরে নেওয়া হচ্ছে /models রুটে সমস্ত মডেল দেখা যায়) */}
-            <li><Link to="/app/models">View Models</Link></li> 
+            <li>
+                {/* 🛑 FIX: Home বাটনের শর্তসাপেক্ষ লিঙ্ক */}
+                <Link to={user ? "/app" : "/"}>Home</Link>
+            </li>
+            
+            {/* View Models: সকল মডেল দেখার জন্য। লগইন করা থাকলে /app/models, না হলে /models */}
+            <li><Link to={user ? "/app/models" : "/models"}>View Models</Link></li> 
             
             {/* Add Model: শুধুমাত্র লগইন করা ব্যবহারকারীর জন্য */}
             {user && <li><Link to="/app/add-model">Add Model</Link></li>}
@@ -38,14 +40,14 @@ const Navbar = () => {
                 {/* Mobile Dropdown (Hamburger Menu) */}
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                        <svg xmlns="http://www.w3.0g/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </div>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         {navLinks}
                     </ul>
                 </div>
-                {/* Logo/Brand */}
-                <Link to="/" className="btn btn-ghost text-xl font-bold text-primary hover:bg-transparent">
+                {/* Logo/Brand: এটিও শর্তসাপেক্ষ হওয়া উচিত */}
+                <Link to={user ? "/app" : "/"} className="btn btn-ghost text-xl font-bold text-primary hover:bg-transparent">
                     AI Model Marketplace
                 </Link>
             </div>

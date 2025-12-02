@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
 import AboutAIModelsSection from './AboutAIModelsSection';
-// import { useAuth } from '../../providers/AuthProvider';
-// 🔑 যদি লোডার কম্পোনেন্ট ব্যবহার করতে চান, তবে এটি ইম্পোর্ট করুন:
+// import { useAuth } from '../../providers/AuthProvider'; // Auth লজিক কমেন্ট করা হয়েছে
 // import Loader from '../../components/Loader/Loader'; 
 
 
@@ -10,39 +9,36 @@ const WelcomeScreen = () => {
     // const { user, loading } = useAuth(); 
     const navigate = useNavigate();
 
-    // 🔑 1. স্বয়ংক্রিয় রিডাইরেক্ট লজিক (লগড-ইন ইউজারদের জন্য)
+    // 🔑 লগড-ইন ইউজারদের জন্য স্বয়ংক্রিয় রিডাইরেক্ট লজিক (কমেন্টেড):
     // useEffect(() => {
-    //     // যদি লোডিং শেষ হয় এবং ইউজার লগড-ইন থাকে, তবে সরাসরি /app (হোম) এ নিয়ে যাও
     //     if (!loading && user) {
     //         navigate('/app', { replace: true }); 
     //     }
     // }, [user, loading, navigate]);
 
 
+    // 🛠️ একক বাটন লজিক: Get Started ক্লিক করলে সরাসরি /login রুটে নিয়ে যাবে।
     const handleGetStarted = () => {
-        // if (loading) return; 
-        
-        // 🔑 2. Get Started ক্লিক করলে এখন শুধুমাত্র /login রুটে নিয়ে যাবে।
-        //      লগড-ইন চেক এখানে অপ্রয়োজনীয়, কারণ useEffect ইতিমধ্যেই তা হ্যান্ডেল করছে।
-        navigate('/login');
+        // এই নেভিগেশনটি ওয়ান-ক্লিক সাইনআপ/লগইন ফ্লো শুরু করে।
+        // ইউজার এখন লগইন পেজে গিয়ে ইমেইল দেবে, এবং লগইন পেজটিই যাচাই করবে।
+        navigate('/login'); 
     };
+    
 
-    // 🔑 3. Loading অবস্থায় শুধু একটি বার্তা বা Loader দেখাও
+    // 🔑 Loading অবস্থায় শুধু একটি বার্তা বা Loader দেখাও:
     // if (loading) {
     //     return (
     //         <div 
     //             className="flex items-center justify-center min-h-screen w-full text-white"
     //             style={{ backgroundColor: '#0c101d' }}
     //         >
-    //             {/* Loader কম্পোনেন্ট ব্যবহার করতে চাইলে */}
-    //             {/* <Loader /> */}
     //             <span className="loading loading-dots loading-lg text-indigo-400"></span>
     //             <p className="ml-4">Verifying user session...</p>
     //         </div>
     //     );
     // }
     
-    // 🔑 4. এই কোড ব্লকটি শুধুমাত্র তখনই রেন্ডার হবে যখন loading=false এবং user=null (লগড-আউট)
+    // 🔑 স্ট্যাটিক Welcome Page (যদি লগড-আউট থাকে)
     return (
         <div 
             className="flex flex-col items-center justify-center min-h-screen text-white text-center"
@@ -55,6 +51,7 @@ const WelcomeScreen = () => {
                Discover, compare, and integrate the best AI models for your projects. Start your journey here.
             </p>
 
+            {/* 🛠️ একক Get Started বাটন যা /login এ নিয়ে যাবে */}
             <button
                 onClick={handleGetStarted}
                 className="btn btn-lg bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-8 rounded-full shadow-2xl transition duration-300 transform hover:scale-105"
@@ -62,7 +59,9 @@ const WelcomeScreen = () => {
                 Get Started
             </button>
             
-            {/* go to about Ai model section */}
+            <p className="mt-4 text-gray-500 text-sm">
+                Click "Get Started" to Login or Create an Account.
+            </p>
 
            <AboutAIModelsSection/>
         </div>
