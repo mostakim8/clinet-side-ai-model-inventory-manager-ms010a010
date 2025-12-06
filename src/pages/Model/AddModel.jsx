@@ -28,6 +28,36 @@ export const AddModel = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
+        // 🛑 DEBUGGING লাইন যোগ করা হলো (কনসোলে ডেটা চেক করার জন্য)
+        // console.log("Current User Object:", user);
+        // console.log("Is getIdToken function available?", typeof user?.getIdToken === 'function');
+
+
+        //  firebase token fetching logic
+        let token = null;
+
+        if (user && typeof user.getIdToken === 'function') {
+            try {
+                // ✅ CRITICAL FIX: টোকেনটি অপেক্ষা করে (await) আনা হচ্ছে
+                token = await user.getIdToken(); 
+                // console.log("Fetched Token:", token); 
+            } catch (error) {
+                console.error("Failed to fetch ID Token:", error);
+                toast.error("Failed to retrieve authentication token.");
+                setIsSubmitting(false);
+                return;
+            }
+        } else {
+            // যদি getIdToken ফাংশন না থাকে, এবং টোকেন প্রপার্টিতে থাকে, সেটি ব্যবহার করার চেষ্টা
+            token = user?.accessToken || user?.idToken; 
+        }
+
+        if (!token){
+            toast.error("Authentication required. Please Log in again");
+            setIsSubmitting(false);
+            return;
+        }
+
         const form = e.target;
         
         // ফর্ম ডেটা সংগ্রহ
@@ -46,12 +76,12 @@ export const AddModel = () => {
         const addToastId = toast.loading("Adding model to inventory...");
         
         try {
-            const response = await fetch(`${SERVER_BASE_URL}/add-model`, {
+            const response = await fetch(`${SERVER_BASE_URL}/models`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // অথেনটিকেশনের জন্য token প্রয়োজন হলে এখানে যোগ করুন:
-                    // 'Authorization': `Bearer ${user.token}` 
+                    // ✅ CRITICAL FIX: এখানে সঠিকভাবে আনা 'token' ভেরিয়েবলটি ব্যবহার করা হলো।
+                    'Authorization': `Bearer ${token}` 
                 },
                 body: JSON.stringify(newModel),
             });
@@ -258,13 +288,14 @@ export const AddModel = () => {
  
                     {/* Submit Button (Full Width) */}
                     <div className="form-control mt-6 md:col-span-2">
-                        <button 
-                            type="submit" 
-                            className={`btn btn-primary w-full text-white font-bold rounded-xl transition duration-300 ${isSubmitting ? 'loading' : ''}`} 
-                            disabled={isSubmitting}
+                       <button type="submit"
+                             className={`w-full bg-linear-to-r from-indigo-500 to-blue-500 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-[1.01] 
+                             ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-100 **cursor-pointer**'}`}
+                             disabled={isSubmitting}
                         >
-                            {isSubmitting ? 'Adding Model...' : 'Add Model to Inventory'}
+                             {isSubmitting ? 'Adding Model...' : 'Add Model'}
                         </button>
+
                     </div>
                 </form>
             </div>
