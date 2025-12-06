@@ -6,14 +6,13 @@ import { Link } from 'react-router-dom';
 const SERVER_BASE_URL = 'http://localhost:5001';
 
 const MyModels = () => {
-    // Auth context থেকে user info নেওয়া
     const { user } = useAuth(); 
     const [myModels, setMyModels] = useState([]);
     const [loading, setLoading] = useState(true);
     
     // 🔑 ADDED: Deleting state for button spinner
     const [isDeleting, setIsDeleting] = useState(false); 
-    const [deletingId, setDeletingId] = useState(null); // কোন মডেলটি ডিলিট হচ্ছে তার ID ট্র্যাক করার জন্য
+    const [deletingId, setDeletingId] = useState(null); 
 
     // Custom Toast/Notification state
     const [toast, setToast] = useState({ show: false, message: '', type: '' });
@@ -45,13 +44,11 @@ const MyModels = () => {
 
     // --- Core function to fetch data for the logged-in user ---
     const fetchMyModels = () => {
-         // ইউজার ইমেইল না থাকলে বা লোড হতে না পারলে রিটার্ন করা 
          if (!user?.email) {
             setLoading(false);
             return;
         }
         
-        // Query by developer email (backend-কে বলা হচ্ছে এই ইমেইলের মডেল দাও)
         fetch(`${SERVER_BASE_URL}/models?email=${user.email}`) 
             .then(res => {
                 if (!res.ok) {
@@ -66,19 +63,17 @@ const MyModels = () => {
             .catch(error => {
                 console.error("Error fetching user models:", error);
                 setLoading(false);
-                // ⭐ Custom Toast ব্যবহার করা হলো ⭐
                 showToast('Could not fetch your models. Ensure the server is running.', 'error');
             });
     };
     
-    // --- Initial Fetch: ইউজার লগইন করলে ডেটা লোড করা ---
     useEffect(() => {
         if (user?.email) {
             fetchMyModels();
         } else {
             setLoading(false);
         }
-    }, [user?.email]); // user.email change হলে এটি re-run হবে
+    }, [user?.email]); // user.email change হলে  re-run হবে
 
     // --- Delete Handler (Token Included) ---
     const handleDelete = async (id, name) => { 
@@ -93,23 +88,22 @@ const MyModels = () => {
         const isConfirmed = window.confirm(`Are you sure you want to delete ${name}? This action cannot be undone.`);
 
         if (isConfirmed) {
-            // 🔑 Set loading state for the specific button
+            //  Set loading state for the specific button
             setIsDeleting(true);
             setDeletingId(id);
 
             try {
-                // 🔥 CRITICAL: Firebase theke ID Token toiri kora hochche
+                // CRITICAL: Firebase theke ID Token toiri kora hochche
                 const token = await currentUser.getIdToken(); 
                 
                 // Send DELETE request to the server
-                const res = await fetch(`${SERVER_BASE_URL}/models/${id}`, { // ⚠️ রুটটি ঠিক করা হলো: /a/models থেকে /models
+                const res = await fetch(`${SERVER_BASE_URL}/models/${id}`, { 
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}` // ✅ FIX: Token included here
                     }
                 });
 
-                // সার্ভার থেকে error message থাকলে তা handle করা
                 if (!res.ok) {
                     const err = await res.json();
                     // Unauthorized (401) or Forbidden (403) check
@@ -122,21 +116,17 @@ const MyModels = () => {
                 const data = await res.json();
 
                 if (data.deletedCount > 0) {
-                    // ⭐ Custom Toast ব্যবহার করা হলো ⭐
                     showToast(`${name} has been removed from the inventory.`, 'success');
-                    // UI থেকে ডিলিট হওয়া মডেলটি সরিয়ে দেওয়া
                     setMyModels(prevModels => prevModels.filter(model => model._id !== id));
                 } else {
-                    // ⭐ Custom Toast ব্যবহার করা হলো ⭐
                     showToast('Model was not deleted, possibly not found.', 'error');
                 }
             }
             catch(error) {
                 console.error("Delete Error:", error);
-                // ⭐ Custom Toast ব্যবহার করা হলো ⭐
                 showToast(`Model could not be deleted. Details: ${error.message}`, 'error');
             } finally {
-                // 🔑 Reset loading state
+                // Reset loading state
                 setIsDeleting(false);
                 setDeletingId(null);
             }
@@ -144,7 +134,7 @@ const MyModels = () => {
     };
 
 
-    // 🔑 Data Fetching Spinner (Already correct)
+    //  Data Fetching Spinner (Already correct)
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-[50vh]">
@@ -153,14 +143,13 @@ const MyModels = () => {
         );
     }
 
-    // যদি ইউজার লগড ইন না থাকে (Private Route এটি ব্লক করবে, কিন্তু তবুও সেফটির জন্য)
     if (!user) {
         return <div className="text-center py-20 text-xl text-error">Please log in to view your models.</div>;
     }
 
     return (
         <div className="py-10 px-4 md:px-0">
-            <ToastNotification /> {/* ⭐ Toast component এখানে যোগ করা হলো ⭐ */}
+            <ToastNotification /> 
             
             <h1 className="text-4xl font-bold text-center mb-10 text-secondary">
                 My Model Inventory ({myModels.length})

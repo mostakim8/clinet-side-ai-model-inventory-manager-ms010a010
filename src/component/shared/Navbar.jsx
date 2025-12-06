@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider'; 
 
 const Navbar = () => {
-    // Auth context থেকে user info এবং logout ফাংশনটি destructure করা হলো
     const { user, logout } = useAuth(); 
     const navigate = useNavigate();
 
@@ -18,18 +17,14 @@ const Navbar = () => {
         }
     };
 
-    // 🔑 সংশোধিত লজিক: Home লিঙ্কটি শর্তসাপেক্ষ হবে
     const navLinks = (
         <>
             <li>
-                {/* 🛑 FIX: Home বাটনের শর্তসাপেক্ষ লিঙ্ক */}
                 <Link to={user ? "/app" : "/"}>Home</Link>
             </li>
             
-            {/* View Models: সকল মডেল দেখার জন্য। লগইন করা থাকলে /app/models, না হলে /models */}
             <li><Link to={user ? "/app/models" : "/models"}>View Models</Link></li> 
             
-            {/* Add Model: শুধুমাত্র লগইন করা ব্যবহারকারীর জন্য */}
             {user && <li><Link to="/app/add-model">Add Model</Link></li>}
         </>
     );
@@ -46,7 +41,6 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                {/* Logo/Brand: এটিও শর্তসাপেক্ষ হওয়া উচিত */}
                 <Link to={user ? "/app" : "/"} className="btn btn-ghost text-xl font-bold text-primary hover:bg-transparent">
                     AI Model Marketplace
                 </Link>

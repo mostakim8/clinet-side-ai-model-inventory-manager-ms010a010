@@ -7,12 +7,11 @@ import PrivateRoute from "./PrivateRoute";
 // Error Page
 import ErrorPage from "../pages/NotFound/NotFound404"; 
 
-// Public Pages (যেগুলো লগইন ছাড়াই অ্যাক্সেস করা যায়)
 import WelcomeScreen from "../pages/Welcome/WelcomeScreen"; 
 import {Login} from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 
-// App Content (লগইন করা আবশ্যক)
+
 import {Home} from "../pages/Home/Home";
 import ProfileUpdate from "../pages/ProfileUpdate/ProfileUpdate"; 
 import ViewModels from "../pages/Model/ViewModels";
@@ -38,24 +37,19 @@ const updateModelLoader = async ({ params }) => {
 
 const Routes = createBrowserRouter([
     {
-        // 1. প্রধান এন্ট্রি পয়েন্ট: WelcomeScreen (লগইন না করা ইউজারদের জন্য)
         path: "/",
         element: <WelcomeScreen />, 
         errorElement: <ErrorPage />, 
     },
     
-    // 2. Auth Routes: এগুলিই একমাত্র পেজ যা লগইন না করে দেখা যাবে
     { path: "login", element: <Login /> },
     { path: "register", element: <Register/> },
 
-    // 🔑 3. /app রুট: সমস্ত মূল অ্যাপ্লিকেশনের কনটেন্ট (সম্পূর্ণ সুরক্ষিত)
     {
         path: "/app",
-        // 🔑 পুরো MainLayout-কে PrivateRoute দিয়ে র‍্যাপ করা হয়েছে
         element: <PrivateRoute><MainLayout /></PrivateRoute>,
         errorElement: <ErrorPage />,
         children: [
-            // --- এই চাইল্ড রুটগুলো অ্যাক্সেস করতে হলে অবশ্যই লগইন করতে হবে ---
             { 
                 index: true, 
                 element: <Home /> 

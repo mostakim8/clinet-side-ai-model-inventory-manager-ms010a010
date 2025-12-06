@@ -134,15 +134,13 @@ const UpdateModel = () => {
     
     
     return (
-        // 💡 প্রধান কন্টেইনার: রেসপনসিভ, ডার্ক ব্যাকগ্রাউন্ড
         <div className="min-h-screen flex items-center justify-center p-4 md:p-8" >
             <Helmet>
                 <title>Update Model - {modelName}</title>
             </Helmet>
             <ToastNotification /> 
             
-            {/* 💡 ফর্ম কার্ড: মসৃণ শ্যাডো, ডার্ক ব্যাকগ্রাউন্ড এবং হালকা গ্রেডিয়েন্ট */}
-            <div className="w-full max-w-4xl mx-auto my-10 p-8 shadow-[0_0_40px_rgba(109,40,217,0.3)] rounded-xl bg-gradient-to-br from-[#131a2e] to-[#182035] text-white border border-indigo-900/50 transition duration-500">
+            <div className="w-full max-w-4xl mx-auto my-10 p-8 shadow-[0_0_40px_rgba(109,40,217,0.3)] rounded-xl bg-linear-to-br from-[#131a2e] to-[#182035] text-white border border-indigo-900/50 transition duration-500">
             
                 <h1 className="text-4xl font-extrabold text-center mb-2 text-pink-500">
                     Edit AI Model: <span className="text-primary">{modelName}</span>
@@ -170,7 +168,7 @@ const UpdateModel = () => {
                             id="modelName"
                             defaultValue={modelName} 
                             placeholder="" 
-                            // 💡 Focus Effect যোগ করা হলো
+                            //  Focus Effect add
                             className="input w-full bg-transparent border-gray-700 text-gray-100 border rounded-lg transition duration-300 focus:ring-2 focus:ring-primary focus:border-primary focus:shadow-md focus:shadow-primary/30 focus:outline-none pt-4"
                             onFocus={()=> setModelNameFocused(true)}
                             onBlur={(e)=> setModelNameFocused(e.target.value.trim() !== '')}
@@ -183,7 +181,6 @@ const UpdateModel = () => {
                         <label className="label"><span className="label-text font-semibold text-gray-400">Category (Framework)</span></label>
                         <select 
                             name="category" 
-                            // 💡 select এর জন্য ডার্ক থিম স্টাইল
                             className="select select-bordered bg-gray-700 text-white border-gray-600 focus:border-primary focus:ring-primary ms-0 lg:ms-0" 
                             defaultValue={category} 
                             required
@@ -204,7 +201,6 @@ const UpdateModel = () => {
                             name="developerEmail" 
                             defaultValue={user?.email || 'Loading...'} 
                             readOnly 
-                            // 💡 Read-only ফিল্ডের জন্য স্পষ্ট ডিজাইন
                             className="input input-bordered bg-gray-800 text-gray-400 cursor-not-allowed border-gray-700 " 
                         />
                     </div>
@@ -227,7 +223,6 @@ const UpdateModel = () => {
                             id="imageUrl"
                             defaultValue={imageUrl} 
                             placeholder=""
-                            // 💡 Image URL-কে অ্যাকসেন্ট কালার দিয়ে হাইলাইট করা
                             className="input w-full bg-transparent border-accent text-white border-2 focus:ring-2 focus:ring-accent focus:border-accent focus:shadow-lg focus:shadow-accent/20 pt-4" 
                             onFocus={()=> setImageUrlFocused(true)}
                             onBlur={(e)=> setImageUrlFocused(e.target.value.trim() !== '')}
@@ -255,7 +250,7 @@ const UpdateModel = () => {
                             id="description"
                             defaultValue={description} 
                             placeholder="" 
-                            // 💡 Textarea Focus Effect যোগ করা হলো
+                            //  Textarea Focus Effect add
                             className="textarea textarea-bordered h-32 w-full bg-transparent border-gray-700 text-white border-gray-600 transition duration-300 focus:ring-2 focus:ring-primary focus:border-primary focus:shadow-md focus:shadow-primary/30 pt-8" 
                             onFocus={()=> setDescriptionFocused(true)}
                             onBlur={(e)=> setDescriptionFocused(e.target.value.trim() !== '')}
@@ -267,7 +262,6 @@ const UpdateModel = () => {
                     <div className="form-control mt-6 md:col-span-2">
                         <button 
                             type="submit" 
-                            // 💡 বাটন হোভার এফেক্ট
                             className={`btn btn-secondary w-full text-white font-bold rounded-xl transition duration-300 transform hover:scale-[1.01] shadow-lg hover:shadow-secondary/50 ${isSubmitting ? 'loading' : ''}`}
                             disabled={isSubmitting}
                         >

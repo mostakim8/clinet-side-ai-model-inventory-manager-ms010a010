@@ -7,13 +7,13 @@ import {
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword,
     signOut,
-    updateProfile, // ✅ updateProfile import করা আছে 
+    updateProfile,  
 } from 'firebase/auth';
 
 import { auth, db } from '../firebase/firebase.config'; 
 
 
-// Auth Context তৈরি
+// create Auth Context 
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -24,7 +24,6 @@ export const useAuth = () => {
     return context;
 };
 
-// AuthProvider কম্পোনেন্ট (এটি Auth লজিক পরিচালনা করে)
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -64,7 +63,6 @@ export const AuthProvider = ({ children }) => {
         };
     }, []);
 
-    // ... (বাকি ফাংশনগুলি অপরিবর্তিত)
     const login = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     };
@@ -79,26 +77,21 @@ export const AuthProvider = ({ children }) => {
 
         if (currentUser && !currentUser.isAnonymous) {
             try {
-                // 1. প্রোফাইল আপডেট
                 await updateProfile(currentUser, {
                     displayName: name,
                     photoURL: photoURL
                 });
 
-                // 2. 🌟 অত্যন্ত গুরুত্বপূর্ণ: ব্যবহারকারীর সেশন ডেটা রিলোড করা
                 await currentUser.reload(); 
                 
-                // 3. স্টেট আপডেট: নতুন user data দিয়ে setUser স্টেট আপডেট করা
                 setUser({...auth.currentUser});
                 return; 
 
             } catch (error) {
-                // এরর হলে সেটি থ্রো করা যাতে ProfileUpdate এর catch block এ ধরা পড়ে
                 console.error("Firebase updateProfile failed:", error);
                 throw error;
             }
         }
-        // যদি ইউজার লগইন না করে, তবে একটি এরর থ্রো করা
         throw new Error("No user is currently logged in.");
     }
 
@@ -120,7 +113,6 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {/* 🔑 isLoading স্টেট ব্যবহার করে লোডিং ইউআই দেখানো */}
             {isLoading ? (
                  <div className="flex justify-center items-center min-h-screen">
                     <span className="loading loading-spinner loading-lg text-primary"></span>

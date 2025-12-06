@@ -1,5 +1,3 @@
-// File: src/pages/Welcome/AboutAIModelsSection.jsx
-
 import React from 'react';
 
 const AboutAIModelsSection = () => {

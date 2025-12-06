@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async'; 
 import { useAuth } from '../../providers/AuthProvider.jsx'; 
-// 🔑 Slider কম্পোনেন্ট ইম্পোর্ট করা হলো
 // import Slider from '../../component/Slider/Slider.jsx'; 
 
 // Server base URL 
@@ -34,7 +33,7 @@ export const Home = () => {
                 }
                 
                 const data = await response.json();
-                console.log("Fetched Models Data:", data); // এই লাইনটি যোগ করুন
+                console.log("Fetched Models Data:", data); 
                 setModels(data);
             } catch (err) {
                 console.error("Failed to fetch models:", err);
@@ -100,10 +99,9 @@ export const Home = () => {
                 <title>AI Model Market - Discover</title>
             </Helmet>
             
-            {/* 🔑 স্লাইডার যুক্ত করা হলো */}
+            {/* 🔑 add slider */}
             {/* <Slider />  */}
             
-            {/* মেইন কন্টেন্ট ডিসপ্লে কন্টেইনার (Slider থেকে কিছুটা গ্যাপ দেওয়া হলো) */}
             <div className="mt-8 px-4 sm:px-6 lg:px-8"> 
 
                 <h1 className="text-4xl font-bold mb-4 text-center text-gray-800">

@@ -45,7 +45,6 @@ const CheckCircleIcon = (props) => (
     </svg>
 );
 
-// ✅ FIX: Component-ti ekhon default export-er bodole named export hishebe export kora hoyeche.
 export const ModelDetails = () => {
     const { id } = useParams();
     const { user, isLoading: isAuthLoading } = useAuth(); 
@@ -66,16 +65,14 @@ export const ModelDetails = () => {
     const [toast, setToast] = useState({ show: false, message: '', type: '' });
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-    // 🔑🔑 নতুন স্টেট এবং কনস্ট্যান্ট যোগ করা হলো 🔑🔑
     const [isExpanded, setIsExpanded] = useState(false); 
-    const DESCRIPTION_LIMIT = 200; // বর্ণনা কত অক্ষর পর্যন্ত ছোট করে দেখানো হবে
+    const DESCRIPTION_LIMIT = 200; 
 
     const showToast = (message, type) => {
         setToast({ show: true, message, type });
         setTimeout(() => setToast({ show: false, message, type }), 4000);
     };
 
-    // 🔑🔑 বর্ণনা টগল করার ফাংশন 🔑🔑
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
     };
@@ -183,7 +180,6 @@ export const ModelDetails = () => {
             };
             
             // Call the purchase endpoint
-            // ✅ FIX: /purchase-model routeটি এখন সার্ভারে POST মেথডে ডিফাইন করা হয়েছে
             const res = await fetch(`${SERVER_BASE_URL}/purchase-model`, {
                 method: 'POST',
                 headers: {
@@ -244,7 +240,6 @@ export const ModelDetails = () => {
         buttonDisabled = false; 
     } else if (user?.email === model.developerEmail) {
         // Developer
-        // 🔑 FIX: text-error class যোগ করে ফন্ট কালার পরিবর্তন করা হলো
         buttonContent = (
             <span className="text-error font-bold">
                 Your Model (Cannot Buy)
@@ -324,11 +319,9 @@ export const ModelDetails = () => {
                         <div className="border-b pb-4 mb-4">
                             <h3 className="text-xl font-semibold text-gray-700 mb-2">Description</h3>
                             
-                            {/* 🔑🔑 ফিক্সড Description রেন্ডারিং লজিক 🔑🔑 */}
                             {model.description && model.description.length > DESCRIPTION_LIMIT ? (
                                 <>
                                     <p className="text-lg text-gray-600 whitespace-pre-wrap">
-                                        {/* isExpanded এর উপর ভিত্তি করে সংক্ষিপ্ত বা পূর্ণ বর্ণনা দেখানো */}
                                         {isExpanded 
                                             ? model.description 
                                             : model.description.substring(0, DESCRIPTION_LIMIT) + '...'
@@ -342,10 +335,8 @@ export const ModelDetails = () => {
                                     </button>
                                 </>
                             ) : (
-                                // যদি বর্ণনা ছোট হয়, তবে পুরোটা দেখাবে
                                 <p className="text-lg text-gray-600 whitespace-pre-wrap">{model.description}</p>
                             )}
-                            {/* 🔑🔑 ফিক্সড Description রেন্ডারিং লজিক শেষ 🔑🔑 */}
                         </div>
 
 
@@ -445,7 +436,7 @@ export const ModelDetails = () => {
                             </button>
                             <button 
                                 onClick={confirmPurchase} // This calls the API transaction
-                                className={`btn btn-primary ${isPurchasing ? 'loading' : ''}`} // ⬅️ **loading ক্লাসটি যোগ করা হয়েছে**
+                                className={`btn btn-primary ${isPurchasing ? 'loading' : ''}`} 
                                 disabled={isPurchasing}
                             >
                                 {isPurchasing ? 'Processing...' : 'Yes, Purchase it!'}

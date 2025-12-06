@@ -108,7 +108,7 @@ const RegisterLoading = () => {
                         <rect x={470} y={265} width={8} height={10} fill="url(#pinGradient)" rx={2} />
                     </g>
                     
-                    {/* Text inside the chip (পরিবর্তন করা হলো) */}
+                    {/* change Text inside the chip  */}
                     <text 
                         x={400} 
                         y={240} 

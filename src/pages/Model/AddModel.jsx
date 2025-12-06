@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider.jsx'; 
-import { toast } from 'react-hot-toast'; // টোস্ট নোটিফিকেশনের জন্য
+import { toast } from 'react-hot-toast'; 
 
-// ⚠️ ধরে নেওয়া হচ্ছে আপনার API কল ফাংশন বা সার্ভার বেস URL এখানে ডিফাইন করা আছে।
 const SERVER_BASE_URL = 'http://localhost:5001'; 
 
 
-// 🔑 AddModel ফাংশন কম্পোনেন্ট
 export const AddModel = () => {
-    const { user } = useAuth(); // বর্তমানে লগইন করা ব্যবহারকারীর ডেটা
+    const { user } = useAuth(); 
     const navigate = useNavigate();
     
     const [isSubmitting, setIsSubmitting] = useState(false);
     
-    // 🔑 ফ্লোটিং লেবেলের জন্য ফোকাস স্টেটগুলো
     const [modelNameFocused, setModelNameFocused] = useState(false);
     const [frameworkFocused, setFrameworkFocused] = useState(false);
     const [useCaseFocused, setUseCaseFocused] = useState(false);
@@ -23,12 +20,10 @@ export const AddModel = () => {
     const [imageUrlFocused, setImageUrlFocused] = useState(false);
 
     
-    // 🔑 API কল লজিক
     const handleAddModel = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // 🛑 DEBUGGING লাইন যোগ করা হলো (কনসোলে ডেটা চেক করার জন্য)
         // console.log("Current User Object:", user);
         // console.log("Is getIdToken function available?", typeof user?.getIdToken === 'function');
 
@@ -38,7 +33,6 @@ export const AddModel = () => {
 
         if (user && typeof user.getIdToken === 'function') {
             try {
-                // ✅ CRITICAL FIX: টোকেনটি অপেক্ষা করে (await) আনা হচ্ছে
                 token = await user.getIdToken(); 
                 // console.log("Fetched Token:", token); 
             } catch (error) {
@@ -48,7 +42,6 @@ export const AddModel = () => {
                 return;
             }
         } else {
-            // যদি getIdToken ফাংশন না থাকে, এবং টোকেন প্রপার্টিতে থাকে, সেটি ব্যবহার করার চেষ্টা
             token = user?.accessToken || user?.idToken; 
         }
 
@@ -60,7 +53,7 @@ export const AddModel = () => {
 
         const form = e.target;
         
-        // ফর্ম ডেটা সংগ্রহ
+        // collect data
         const newModel = {
             modelName: form.modelName.value,
             framework: form.framework.value,
@@ -69,7 +62,7 @@ export const AddModel = () => {
             description: form.description.value,
             imageUrl: form.imageUrl.value,
             category: form.category.value,
-            developerEmail: user?.email, // লগইন করা ইউজারের ইমেইল
+            developerEmail: user?.email, 
             // price: parseFloat(form.price.value) || 0, // যদি price ইনপুট থাকে
         };
 
@@ -80,14 +73,12 @@ export const AddModel = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // ✅ CRITICAL FIX: এখানে সঠিকভাবে আনা 'token' ভেরিয়েবলটি ব্যবহার করা হলো।
                     'Authorization': `Bearer ${token}` 
                 },
                 body: JSON.stringify(newModel),
             });
 
             if (!response.ok) {
-                // সার্ভার সাইড থেকে এরর মেসেজ আনার চেষ্টা
                 const errorData = await response.json();
                 throw new Error(errorData.message || `Failed with status: ${response.status}`);
             }
@@ -95,7 +86,6 @@ export const AddModel = () => {
             // সফল হলে
             toast.success('Model added successfully!', { id: addToastId });
             form.reset();
-            // মডেল যোগ করার পর অন্য পেজে রিডাইরেক্ট করা
             navigate('/app/my-models'); 
             
         } catch (error) {

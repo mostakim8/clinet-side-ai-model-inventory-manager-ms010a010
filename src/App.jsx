@@ -11,7 +11,6 @@ import Register from './pages/Auth/Register.jsx';
 // Main App Component
 const App = () => {
   return (
-    // AuthProvider পুরো অ্যাপ্লিকেশনকে ঘিরে রেখেছে।
     <AuthProvider>
       <Router>
         <Routes>

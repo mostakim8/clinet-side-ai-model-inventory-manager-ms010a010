@@ -71,7 +71,6 @@ const ProfileUpdate = () => {
                 {/* Current User Info Card */}
                 <div className="flex flex-col items-center p-4 bg-base-200 rounded-lg border border-gray-700/50">
                     <img 
-                        // যদি photoURL না থাকে, তবে default ছবি দেখাবে
                         src={photoURL || 'https://i.ibb.co/6y4tH7v/default-profile.png'} 
                         alt="Current Profile" 
                         className="w-24 h-24 object-cover rounded-full border-4 border-accent"
@@ -98,7 +97,6 @@ const ProfileUpdate = () => {
                         />
                     </div>
                     
-                    {/* 🔑🔑 ফিক্সড সেকশন: সরাসরি URL ইনপুট 🔑🔑 */}
                     <div className="space-y-2 p-4 border rounded-lg border-gray-600/50">
                         <label className="label">
                             <span className="label-text font-bold text-lg text-secondary">Update Profile Picture (Image URL)</span>

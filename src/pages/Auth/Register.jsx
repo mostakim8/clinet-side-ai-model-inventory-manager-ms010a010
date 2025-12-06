@@ -128,7 +128,7 @@ const Register = () => {
                 
                 <form className="card-body" onSubmit={handleRegister}>
                     
-                    {/* 🔑 Lottie Animation */}
+                    {/* Lottie Animation */}
                    <h2 className="card-title  justify-center">
                         <div style={{ width: '290px', height: '250px', marginBottom: '-55px', marginTop: '-50px' }}>
                             <DotLottieReact

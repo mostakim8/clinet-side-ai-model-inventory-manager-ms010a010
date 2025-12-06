@@ -1,18 +1,15 @@
-// src/components/Button/Button.jsx
 import React from 'react';
 
 const RegistorBtn = ({ onClick, children }) => { 
   return (
     <button 
         onClick={onClick}
-        // 🔑 প্রধান পরিবর্তন: bg-red-600 (Normal BG), text-black (Normal Text) 
         // hover:text-white (Hover Text), before:bg-pink-600 (Hover BG Color)
         className=" text-sm flex justify-center gap-2 items-center mx-auto shadow-xl bg-primary text-white border-primary lg:font-semibold isolation-auto before:absolute before:w-full before:h-full before:block before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full  before:bg-pink-900 hover:bg-pink-500 hover:text-white hover:border-pink-400 before:-z-10 before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-xl group h-10"
     >
         {children || 'Registration'}
         
         <svg 
-            // 🔑 SVG-এর ক্লাসেও সংশোধন: Normal অবস্থায় text-black, Hover-এ pink ব্যাকগ্রাউন্ড 
             className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-white-700 text-black ease-linear duration-300 rounded-full border border-white group-hover:border-none p-1 rotate-45" 
             viewBox="0 0 16 19" 
             xmlns="http://www.w3.org/2000/svg"

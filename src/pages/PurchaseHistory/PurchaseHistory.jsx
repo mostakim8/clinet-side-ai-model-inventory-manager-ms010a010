@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../providers/AuthProvider.jsx'; // পাথ সংশোধন করা হয়েছে
+import { useAuth } from '../../providers/AuthProvider.jsx'; 
 import { collection, query, getDocs } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 
-const SERVER_BASE_URL = 'http://localhost:5001'; // সার্ভার URL যোগ করা হলো
+const SERVER_BASE_URL = 'http://localhost:5001'; 
 
 export const PurchaseHistory = () => {
     const { user, isLoading: isAuthLoading, db, isLoggedIn } = useAuth();
@@ -59,29 +59,23 @@ export const PurchaseHistory = () => {
 
             // --- 2. Fetch Detailed Model Data from Backend Server ---
             try {
-                // প্রতিটি modelId এর জন্য বিস্তারিত তথ্য ফেচ করার জন্য Promis.all ব্যবহার
                 const modelDetailsPromises = fetchedPurchases.map(async (purchase) => {
-                    // সার্ভার থেকে মডেলের বিস্তারিত তথ্য ফেচ
                     const res = await fetch(`${SERVER_BASE_URL}/models/${purchase.modelId}`);
                     if (!res.ok) {
-                        // যদি মডেল না পাওয়া যায়, তবে বেসিক তথ্য ব্যবহার করুন
                         console.warn(`Model details not found for ID: ${purchase.modelId}`);
                         return { ...purchase, modelDetails: { framework: 'N/A', useCase: 'N/A', imageUrl: '' } };
                     }
                     const modelData = await res.json();
                     
-                    // ক্রয় রেকর্ড এবং মডেলের বিস্তারিত তথ্য একত্রিত করা
                     return { ...purchase, modelDetails: modelData };
                 });
 
                 const purchasesWithDetails = await Promise.all(modelDetailsPromises);
 
-                // তারিখ অনুসারে সাজানো
                 setPurchases(purchasesWithDetails.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate))); 
 
             } catch (err) {
                  console.error("Error fetching model details:", err);
-                 // মডেল ফেসচ করতে সমস্যা হলে শুধু ক্রয়ের ডেটা দেখানো
                  setPurchases(fetchedPurchases);
                  setError("Warning: Could not fetch detailed model info (Framework/Image). Displaying basic history.");
             } finally {
