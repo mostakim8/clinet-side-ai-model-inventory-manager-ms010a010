@@ -25,7 +25,7 @@ export const AddModel = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Authentication logic (unchanged)
+        // Authentication logic 
         let token = null;
 
         if (user && typeof user.getIdToken === 'function') {
@@ -64,7 +64,7 @@ export const AddModel = () => {
 
         const addToastId = toast.loading("Adding model to inventory...");
         
-        // API Call logic (unchanged)
+        // API Call logic 
         try {
             const response = await fetch(`${SERVER_BASE_URL}/models`, {
                 method: 'POST',
@@ -93,21 +93,12 @@ export const AddModel = () => {
         }
     };
     
-    // 🔑 ফিক্স ১: লেবেলের ব্যাকগ্রাউন্ড: bg-base-100 (থিম-ভিত্তিক)
     const labelBgClass = " bg-base-100! ";
     
-    // 🔑 ফিক্স ২: মেইন কার্ড ব্যাকগ্রাউন্ড এবং বর্ডারকে থিম-ভিত্তিক করা
     return (
         <div className=" min-h-screen flex items-center bg-base-200" >
 
-            <div className="w-full max-w-5xl justify-center p-4 rounded-xl
-
-            /*  ফিক্স ৩: ব্যাকগ্রাউন্ড bg-base-100, টেক্সট text-base-content */
-
-            bg-base-100 text-base-content 
-            
-            /* 🔑 ফিক্স ৪: কাস্টম শ্যাডো সরিয়ে ডেইজিইউআই শ্যাডো ব্যবহার করা হলো */
-            shadow-xl border border-base-300 transition duration-500 mx-auto ">
+            <div className="w-full max-w-5xl justify-center p-4 rounded-xl bg-base-100 text-base-content shadow-xl border border-base-300 transition duration-500 mx-auto ">
 
                 <h2 className="text-3xl font-bold text-center text-primary mb-2 mt-6">Add New AI Model</h2>
                 
@@ -122,9 +113,7 @@ export const AddModel = () => {
                             htmlFor="modelName"
                             className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out   ${labelBgClass}
                             ${modelNameFocused
-                                /* 🔑 ফিক্স ৫: ফোকাসে text-primary বা text-secondary ব্যবহার করা হলো */
                                 ? 'text-primary -translate-y-1/2 opacity-100 px-1  z-10 left-3 text-[11px] rounded' 
-                                /* 🔑 ফিক্স ৬: ডিফল্ট টেক্সট text-base-content/70 ব্যবহার করা হলো */
                                 : 'text-base-content/70 opacity-80  rounded    mt-2 left-3' 
                             }`}
                         >
@@ -134,12 +123,7 @@ export const AddModel = () => {
                             name="modelName" 
                             id="modelName"
                             placeholder="" 
-                            className={`input w-full bg-transparent border 
-                            /* 🔑 ফিক্স ৭: বর্ডার, টেক্সট এবং ফোকাস ইফেক্ট থিম-ভিত্তিক */
-                            border-base-300 text-base-content
-                            rounded-lg transition duration-300 
-                            focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none 
-                            placeholder-shown:pt-4`} // placeholder-shown:pt-4 যোগ করা হলো
+                            className={`input w-full bg-transparent border border-base-300 text-base-content rounded-lg transition duration-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none placeholder-shown:pt-4`} 
                             
                             onFocus={()=> setModelNameFocused(true)}
                             onBlur={(e)=> setModelNameFocused(e.target.value.trim() !== '')} 
@@ -216,8 +200,6 @@ export const AddModel = () => {
                         />
                     </div>
 
-                   
-
                     {/* Image URL */}
                     <div className="form-control relative mb-2">
                         <label 
@@ -245,10 +227,8 @@ export const AddModel = () => {
 
                     {/* Category */}
                     <div className="form-control">
-                        {/* 🔑 ফিক্স ৮: লেবেলের রং text-base-content/70 */}
                         <label className="label"><span className="label-text font-semibold text-base-content/70">Category</span></label>
                         <select name="category" 
-                            /* 🔑 ফিক্স ৯: select ক্লাস ও রং ঠিক করা */
                             className="select select-bordered bg-base-100 border-base-300 text-base-content rounded-lg w-full" 
                             required >
                             <option value="" disabled selected className='text-base-content'>Select Model Category</option>
@@ -275,7 +255,6 @@ export const AddModel = () => {
                             name="description" 
                             id="description"
                             placeholder="" 
-                            /* 🔑 ফিক্স ১০: textarea ক্লাস ও রং ঠিক করা */
                             className="textarea textarea-bordered h-32 w-full bg-transparent border-base-300 text-base-content border rounded-lg transition duration-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-8"
                             onFocus={()=> setDescriptionFocused(true)}
                             onBlur={(e)=> setDescriptionFocused(e.target.value.trim() !== '')}
@@ -285,23 +264,20 @@ export const AddModel = () => {
 
                     {/* Developer Email */}
                     <div className="form-control md:col-span-1 ">
-                        {/* 🔑 ফিক্স ১১: লেবেলের রং text-base-content/70 */}
                         <label className="label"><span className="label-text font-semibold text-base-content/70">Developer Email (Read Only)</span></label>
                         <input 
                             type="email" 
                             name="developerEmail" 
                             defaultValue={user?.email || 'Loading...'} 
                             readOnly 
-                            /* 🔑 ফিক্স ১২: readOnly ইনপুটের রং bg-base-300 এবং text-base-content/60 */
                             className="input input-bordered bg-base-300 text-base-content/60 cursor-not-allowed border-base-300 sm:w-full" 
                         />
                     </div>
                     
  
-                    {/* Submit Button (Full Width) */}
+                    {/* Submit Button  */}
                     <div className="form-control mt-6 md:col-span-2">
                        <button type="submit"
-                             /* 🔑 ফিক্স ১৩: Submit বাটনে ডেইজিইউআই btn-primary ক্লাস ব্যবহার করা হলো */
                              className={`btn btn-primary text-primary-content w-full font-semibold py-3 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-[1.01] 
                              ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-100 cursor-pointer'}`}
                              disabled={isSubmitting}

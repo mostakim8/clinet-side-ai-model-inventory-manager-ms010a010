@@ -46,21 +46,11 @@ export const Login = () => {
         <div className="relative flex items-center justify-center min-h-screen bg-base-200">
             {isLoading && <LogInLoader />}
             
-            {/* 🔑 মেইন ফিক্স: শ্যাডো পরিবর্তন */}
-            <div className="card w-full max-w-md p-6 rounded-lg bg-base-100 text-base-content 
-            
-            /* 1. লাইট মোড শ্যাডো: হালকা এবং ক্লাসিক */
-            shadow-xl shadow-base-content/10 
-            
-            /* 2. ডার্ক মোড শ্যাডো: আপনার চাওয়া কাস্টম বেগুনি শ্যাডো */
-            dark:shadow-[0_0_25px_rgba(109,40,217,0.7)] 
-            dark:hover:shadow-[0_0_35px_rgba(99,102,241,0.9)]
-            
-            border border-base-300 transition duration-500 z-10">
+            <div className="card w-full max-w-md p-6 rounded-lg bg-base-100 text-base-content shadow-xl shadow-base-content/10 dark:shadow-[0_0_25px_rgba(109,40,217,0.7)]  dark:hover:shadow-[0_0_35px_rgba(99,102,241,0.9)] border border-base-300 transition duration-500 z-10">
                 
                 <form className="card-body" onSubmit={handleSubmit}>
                     
-                    {/*Lottie Animation */}
+                    {/*Animation */}
                     <h2 className="card-title text-primary justify-center">
                         <div style={{ 
                             width: '250px', 
@@ -136,7 +126,7 @@ export const Login = () => {
                         />
                     </div>
 
-                    {/* Log In Button (Full Width, Center) */}
+                    {/* Log In Button  */}
                     <div className="form-control mt-1"> 
                         <button 
                             type="submit" 
@@ -152,7 +142,7 @@ export const Login = () => {
                             Don't have an account? 
                         </p>
 
-                         {/* Registration Button (Center) */}
+                         {/* Registration Button  */}
                          <div className="w-full flex justify-center">
                             <RegistorBtn onClick={()=>navigate ('/register')} 
                                 className="group" 

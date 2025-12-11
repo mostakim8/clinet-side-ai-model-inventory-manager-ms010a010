@@ -5,8 +5,7 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        /* 🔑 ফিক্স ১: ফুটার ব্যাকগ্রাউন্ডকে থিম-ভিত্তিক করা হলো (bg-base-300) */
-        <footer className="footer mt-16 p-10 bg-base-300 text-base-content border-t border-base-content/10">
+        <footer className="footer mt-16 p-10 bg-base-300 text-base-content border-t border-base-content/10 ">
             <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-between ">
 
                 {/* Left side*/}
@@ -16,7 +15,6 @@ const Footer = () => {
                     <aside className="mb-8 lg:mb-0 text-center lg:text-left">
             
                         <div className="text-3xl font-bold text-primary">AI Model Market</div>
-                        {/* 🔑 ফিক্স ২: টেক্সট রং text-base-content/80 */}
                         <p className='mt-2 text-base-content/80'>
                             AI Model Inventory Manager.
                             Providing reliable technology since 2024.
@@ -32,7 +30,6 @@ const Footer = () => {
                 <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left lg:gap-28">
                     
                     {/*Services*/}
-                    {/* 🔑 ফিক্স ৩: নেভিগেশন টেক্সট রং text-base-content/70 */}
                     <nav className='text-center mb-8 lg:mb-0 text-base-content/70'>
                         <h3 className="footer-title text-xl text-base-content">Services</h3> 
 
@@ -42,7 +39,6 @@ const Footer = () => {
                     </nav> 
                     
                     {/*Company */}
-                    {/* 🔑 ফিক্স ৪: নেভিগেশন টেক্সট রং text-base-content/70 */}
                     <nav className="mb-8 lg:mb-0 text-center text-base-content/70">
                         <h3 className="footer-title text-xl text-base-content">Company</h3> 
                         <a href="#about" className="link link-hover no-underline">About Us</a> <br />
@@ -51,7 +47,6 @@ const Footer = () => {
                     </nav> 
                     
                     {/* Legal */}
-                    {/* 🔑 ফিক্স ৫: নেভিগেশন টেক্সট রং text-base-content/70 */}
                     <nav className='text-center text-base-content/70  '>
                         <h3 className="footer-title text-xl text-base-content">Legal</h3> 
                         <a href="#" className="link link-hover no-underline">Terms of use</a> <br />
@@ -62,8 +57,7 @@ const Footer = () => {
 
                 </div>
             </div>
-             {/* 🔑 ফিক্স ৬: কপিরাইট টেক্সট রং text-base-content/60 */}
-             <div className="text-sm mt-4 mx-auto text-center text-base-content/60">
+             <div className="text-sm mt-4 mx-auto text-center text-base-content/60 -mb-6">
                  Copyright © {currentYear} - All rights reserved.
              </div>
         </footer>

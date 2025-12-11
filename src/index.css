@@ -3,21 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-    /* IMPORTANT: DaisyUI themes rely on the default base styles.
-    We are removing the hardcoded 'body' and '.dark body' styles 
-    to let DaisyUI's bg-base-100/bg-base-200 control the background based on the theme.
-    */
-
     html {
         @apply transition-colors duration-100 ease-in-out;
     }
-
-    /* কালো বা গাঢ় রঙের শ্যাডো, যা গাঢ় ব্যাকগ্রাউন্ডে টেক্সটকে ফুটিয়ে তুলবে */
     .text-shadow-dark {
         text-shadow: 2px 2px 4px #000000;
     }
-
-    /* যদি আপনি indigo রঙের সাথে মানানসই একটি হালকা গ্লো চান */
     .text-shadow-glow {
         text-shadow: 0 0 10px #7050d4, 0 0 15px #8b60f2;
     }

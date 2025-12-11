@@ -140,11 +140,8 @@ export const AllModels = () => {
                                 <h2 className="card-title text-2xl font-extrabold truncate mb-2">{model.modelName}</h2>
 
                                 {/*framework */}
-
-                                <div className=" space-y-1 text-sm text-gray-600">
-
-                        <p className='flex justify-between items-center'>
-                            
+                            <div className=" space-y-1 text-sm text-gray-600">
+                             <p className='flex justify-between items-center'>
                             <span className=' font-semibold'> Framework:
                             </span>
                             <span className='badge badge-neutral '>{model.framework} 

@@ -28,7 +28,6 @@ const MyModels = () => {
     const ToastNotification = () => {
         if (!toast.show) return null;
         
-        // ডেইজিইউআই/থিম ক্লাস ব্যবহার
         const colorClass = toast.type === 'success' 
             ? 'alert-success text-success-content' 
             : 'alert-error text-error-content';
@@ -74,7 +73,7 @@ const MyModels = () => {
         }
     }, [user?.email]); 
 
-    // --- Delete Handler (Token Included) ---
+    // Delete Handler 
     const handleDelete = async (id, name) => { 
         
         const currentUser = auth.currentUser;
@@ -140,7 +139,7 @@ const MyModels = () => {
         return <div className="text-center py-20 text-xl text-error">Please log in to view your models.</div>;
     }
 
-    return ( // <--- এইখান থেকে return শুরু
+    return ( 
         <div className="py-10 px-4 md:px-0 ">
             <ToastNotification /> 
             
@@ -250,7 +249,7 @@ const MyModels = () => {
                 </div>
             )}
         </div>
-    ); // <--- এইখানে return শেষ
-}; // <--- এইখানে ফাংশন শেষ
+    ); 
+}; 
 
 export default MyModels;

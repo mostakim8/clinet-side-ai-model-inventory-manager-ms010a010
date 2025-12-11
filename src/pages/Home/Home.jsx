@@ -142,9 +142,7 @@ export const Home = () => {
                                 <div className="card-body p-6 flex flex-col justify-between">
                                     <h2 className="card-title text-2xl  font-extrabold truncate mb-2">{model.modelName}</h2>
                                     <p className="text-sm font-semibold text-indigo-400">
-                                        Framework: <span className="text-lg font-bold text-pink-400">  {(model.framework)}</span>
-                                       
-                                        
+                                        Framework: <span className="text-lg font-bold text-pink-400">  {(model.framework)}</span>  
                                         </p>
 
 
@@ -152,14 +150,7 @@ export const Home = () => {
                                     <div className="card-actions justify-end mt-4">
                                         <Link 
                                             to={`/app/model/${model._id}`} 
-                                            className="btn 
-                                btn-ghost 
-                                bg-indigo-600 hover:bg-indigo-700 
-                                text-white 
-                                w-full 
-                                font-bold 
-                                shadow-lg shadow-indigo-500/50
-                                transition duration-300"
+                                            className="btn btn-ghost bg-indigo-600 hover:bg-indigo-700 text-white w-full font-bold shadow-lg shadow-indigo-500/50 transition duration-300"
                                         >
                                             View Details
                                         </Link>

@@ -37,11 +37,10 @@ const UpdateModel = () => {
         setTimeout(() => setToast({ show: false, message: '', type: '' }), 4000);
     };
 
-    // 🔑 ফিক্স ১: Toast Notification কে থিম-ভিত্তিক করা হলো
     const ToastNotification = () => {
         if (!toast.show) return null;
         
-        let colorClass = 'alert-info'; // Default info
+        let colorClass = 'alert-info'; 
         if (toast.type === 'success') {
             colorClass = 'alert-success';
         } else if (toast.type === 'error') {
@@ -58,7 +57,6 @@ const UpdateModel = () => {
     };
 
     if (!modelToUpdate) {
-        // 🔑 ফিক্স ২: এরর মেসেজ থিম-ভিত্তিক
         return <div className="text-center py-20 text-xl text-error bg-base-100 min-h-screen">Error: Model data could not be loaded for editing. Please check the URL and server connectivity.</div>;
     }
 
@@ -124,7 +122,6 @@ const UpdateModel = () => {
         }
     };
     
-    // 🔑 ফিক্স ৩: লেবেলের ব্যাকগ্রাউন্ড ক্লাসের জন্য base-100 ব্যবহার (যাতে থিম অনুযায়ী রং পাল্টায়)
     const labelBgClass = ' bg-base-100! '; 
     
     return (
@@ -134,7 +131,6 @@ const UpdateModel = () => {
             </Helmet>
             <ToastNotification /> 
             
-            {/* 🔑 ফিক্স ৪: কার্ডের ব্যাকগ্রাউন্ড bg-base-100, টেক্সট text-base-content, এবং থিম-কমপ্লায়েন্ট শ্যাডো */}
             <div className="w-full max-w-4xl mx-auto my-10 p-8 
             bg-base-100 text-base-content rounded-xl border border-base-300 transition duration-500 
             shadow-2xl dark:shadow-[0_0_40px_rgba(109,40,217,0.3)]"
@@ -143,7 +139,6 @@ const UpdateModel = () => {
                 <h1 className="text-4xl font-extrabold text-center mb-2 text-primary">
                     Edit AI Model: <span className="text-secondary">{modelName}</span>
                 </h1>
-                {/* 🔑 ফিক্স ৫: টেক্সট এবং ব্যাকগ্রাউন্ড থিম-ভিত্তিক */}
                 <p className="text-center text-base-content/70 mb-8">
                     Model ID: <span className="font-mono text-sm bg-base-300 px-2 py-1 rounded text-base-content">{_id}</span>
                 </p>
@@ -156,9 +151,7 @@ const UpdateModel = () => {
                             htmlFor="modelName"
                             className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} 
                             ${modelNameFocused || modelName 
-                                // 🔑 ফিক্স ৬: ফোকাস রং text-secondary
                                 ? 'text-secondary -translate-y-1/2 opacity-100 px-1  z-10 left-3 text-[11px] rounded' 
-                                // 🔑 ফিক্স ৭: ডিফল্ট রং text-base-content/70
                                 : 'text-base-content/70 opacity-80 mt-2 left-3' 
                             }`}
                         >
@@ -169,7 +162,6 @@ const UpdateModel = () => {
                             id="modelName"
                             defaultValue={modelName} 
                             placeholder="" 
-                            // 🔑 ফিক্স ৮: ইনপুট ক্লাস থিম-ভিত্তিক
                             className="input w-full bg-base-200 border-base-300 text-base-content border rounded-lg transition duration-300 focus:ring-2 focus:ring-primary focus:border-primary focus:shadow-md focus:shadow-primary/30 focus:outline-none pt-4"
                             onFocus={()=> setModelNameFocused(true)}
                             onBlur={(e)=> setModelNameFocused(e.target.value.trim() !== '')}
@@ -179,11 +171,9 @@ const UpdateModel = () => {
                     
                     {/* Category */}
                     <div className="form-control -mt-6">
-                        {/* 🔑 ফিক্স ৯: লেবেল টেক্সট থিম-ভিত্তিক */}
                         <label className="label"><span className="label-text font-semibold text-base-content/70">Category (Framework)</span></label>
                         <select 
                             name="category" 
-                            // 🔑 ফিক্স ১০: সিলেক্ট ক্লাস থিম-ভিত্তিক
                             className="select select-bordered bg-base-200 text-base-content border-base-300 focus:border-primary focus:ring-primary ms-4 lg:ms-0" 
                             defaultValue={category} 
                             required
@@ -198,14 +188,12 @@ const UpdateModel = () => {
                     
                     {/* Developer Email*/}
                     <div className="form-control">
-                        {/* 🔑 ফিক্স ১১: লেবেল টেক্সট থিম-ভিত্তিক */}
                         <label className="label"><span className="label-text font-semibold text-base-content/70 lg:ps-3">Developer Email</span></label>
                         <input 
                             type="email" 
                             name="developerEmail" 
                             defaultValue={user?.email || 'Loading...'} 
                             readOnly 
-                            // 🔑 ফিক্স ১২: রিড-অনলি ইনপুট ক্লাস থিম-ভিত্তিক
                             className="input input-bordered bg-base-300 text-base-content/50 cursor-not-allowed border-base-300 ms-5" 
                         />
                     </div>
@@ -216,7 +204,6 @@ const UpdateModel = () => {
                             htmlFor="imageUrl"
                             className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} 
                             ${imageUrlFocused || imageUrl 
-                                // 🔑 ফিক্স ১৩: ফোকাস রং text-accent
                                 ? 'text-accent -translate-y-1/2 opacity-100 px-1  z-10 left-3 text-[11px] rounded' 
                                 : 'text-base-content/70 opacity-80 pt-4 left-3' 
                             }`}
@@ -229,13 +216,11 @@ const UpdateModel = () => {
                             id="imageUrl"
                             defaultValue={imageUrl} 
                             placeholder=""
-                            // 🔑 ফিক্স ১৪: ইনপুট ক্লাস থিম-ভিত্তিক (accent border)
                             className="input w-full bg-base-200 border-accent text-base-content border-2 focus:ring-2 focus:ring-accent focus:border-accent focus:shadow-lg focus:shadow-accent/20 pt-4" 
                             onFocus={()=> setImageUrlFocused(true)}
                             onBlur={(e)=> setImageUrlFocused(e.target.value.trim() !== '')}
                             required 
                         />
-                        {/* 🔑 ফিক্স ১৫: ফুটনোট টেক্সট থিম-ভিত্তিক */}
                         <p className="text-xs text-base-content/60 mt-1">
                             A visually appealing image is required for the inventory listing.
                         </p>
@@ -247,7 +232,6 @@ const UpdateModel = () => {
                             htmlFor="description"
                             className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} 
                             ${descriptionFocused || description
-                                // 🔑 ফিক্স ১৬: ফোকাস রং text-secondary
                                 ? 'text-secondary -translate-y-1/2 opacity-100 px-1  z-10 left-3 text-[11px] rounded' 
                                 : 'text-base-content/70 opacity-80 pt-4 left-3' 
                             }`}
@@ -259,7 +243,6 @@ const UpdateModel = () => {
                             id="description"
                             defaultValue={description} 
                             placeholder="" 
-                            // 🔑 ফিক্স ১৭: টেক্সটেরিয়া ক্লাস থিম-ভিত্তিক
                             className="textarea textarea-bordered h-32 w-full bg-base-200 border-base-300 text-base-content duration-300 focus:ring-2 focus:ring-primary focus:border-primary focus:shadow-md focus:shadow-primary/30 pt-8" 
                             onFocus={()=> setDescriptionFocused(true)}
                             onBlur={(e)=> setDescriptionFocused(e.target.value.trim() !== '')}
@@ -271,7 +254,6 @@ const UpdateModel = () => {
                     <div className="form-control mt-6 md:col-span-2">
                         <button 
                             type="submit" 
-                            // 🔑 ফিক্স ১৮: btn-secondary এবং text-secondary-content থিম-ভিত্তিক
                             className={`btn btn-secondary w-full text-secondary-content font-bold rounded-xl transition duration-300 transform hover:scale-[1.01] shadow-lg hover:shadow-secondary/50 ${isSubmitting ? 'loading' : ''}`}
                             disabled={isSubmitting}
                         >

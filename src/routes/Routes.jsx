@@ -2,9 +2,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 
 // Layout
 import MainLayout from "../layouts/MainLayouts";
-
 import PrivateRoute from "./PrivateRoute";
-
 // pages
 import WelcomeScreen from "../pages/Welcome/WelcomeScreen";
 // Error Page

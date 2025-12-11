@@ -18,13 +18,11 @@ const MOCK_MODEL = {
 };
 
 
-//Custom Toast (থিম-ভিত্তিক ক্লাস ব্যবহার করা হয়েছে)
 const ToastNotification = ({ show, message, type, onClose }) => {
     if (!show) return null;
     const colorClass = type === 'error' ? 'alert-error' : type === 'warning' ? 'alert-warning' : 'alert-success';
     
     return (
-        // 🔑 ফিক্স: text-white এর বদলে text-base-content/color-content ব্যবহার করুন
         <div className="toast toast-top toast-center z-50">
             <div className={`alert ${colorClass} shadow-lg`}>
                 <div>
@@ -50,7 +48,7 @@ export const ModelDetails = () => {
 
     const isLoggedIn = !!user;
 
-    // Firebase setup (unchanged)
+    // Firebase setup 
     const auth = getAuth();
     const db = getFirestore();
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
@@ -66,9 +64,8 @@ export const ModelDetails = () => {
     const [isExpanded, setIsExpanded] = useState(false); 
     const DESCRIPTION_LIMIT = 200; 
 
-    // ... (showToast, toggleDescription, checkPurchaseStatus, useEffect for fetching, useEffect for purchase status, handlePurchase, confirmPurchase are unchanged)
     
-    // Purchase Status Logic (unchanged)
+    // Purchase Status Logic 
     const checkPurchaseStatus = async (modelId, buyerEmail) => {
         const userId = auth.currentUser?.uid; 
         if (!userId) {
@@ -203,7 +200,6 @@ export const ModelDetails = () => {
     
     if (isTotalLoading) {
         return (
-            /* 🔑 ফিক্স ৭: লোডিং স্ক্রিনকে থিম-ভিত্তিক করা হলো */
             <div className="flex justify-center items-center min-h-[60vh] bg-base-200 text-base-content">
                 <span className="loading loading-spinner loading-lg text-primary"></span>
                 <p className="ml-3 text-lg">{isAuthLoading ? 'Authenticating User...' : 'Loading Model Details...'}</p>
@@ -213,7 +209,6 @@ export const ModelDetails = () => {
 
     if (!model) { 
         return (
-            /* 🔑 ফিক্স ৮: এরর স্ক্রিনকে থিম-ভিত্তিক করা হলো */
             <div className="text-center p-10 min-h-[60vh] bg-base-200 text-base-content">
                 <h1 className="text-4xl text-error font-bold">Error Loading Model</h1>
                 <p className="text-xl mt-4 text-base-content/80">{error || 'Model data is empty.'}</p>
@@ -238,13 +233,16 @@ export const ModelDetails = () => {
                 Your Model (Cannot Buy)
             </span>
         );
-        buttonClass += ' btn-disabled bg-base-300 text-base-content/60 border-none'; // ডার্ক মোডেও যেন কাজ করে
+        buttonClass += ' btn-disabled bg-base-300 text-base-content/60 border-none'; 
         buttonDisabled = true;
     } else if (hasPurchased) {
         //  Purchased
         buttonContent = (
-            <span className="flex items-center justify-center ">
-                <CheckCircleIcon className="mr-2 h-6 w-6" /> Licensed (View History)
+            <span className="flex items-center justify-center  text-pink-400">
+                <p>
+                You have already bought it
+                </p>
+                
             </span>
         );
         buttonClass += ' btn-success text-success-content';
@@ -264,7 +262,6 @@ export const ModelDetails = () => {
     const finalButtonAction = isLoggedIn ? handlePurchase : () => navigate('/login');
 
     return (
-        /* 🔑 ফিক্স ১: মেইন কন্টেইনার ব্যাকগ্রাউন্ড bg-base-200 */
         <div className="container mx-auto p-4 md:p-10 min-h-screen bg-base-200">
             <ToastNotification 
                 show={toast.show} 
@@ -281,7 +278,6 @@ export const ModelDetails = () => {
                 </div>
             )}
             
-            {/* 🔑 ফিক্স ২: মেইন ডিটেইলস কার্ড ব্যাকগ্রাউন্ড bg-base-100 */}
             <div className="bg-base-100 rounded-xl shadow-2xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
                     
@@ -298,7 +294,6 @@ export const ModelDetails = () => {
                                 }}
                             />
                         </figure>
-                        {/* 🔑 ফিক্স ৩: প্রাইমারি ইনফো বক্সেস থিম-ভিত্তিক রং ব্যবহার */}
                         <div className="text-center py-4 bg-primary text-primary-content rounded-lg shadow-xl">
                             <h2 className="text-2xl font-extrabold">Price on Request</h2> 
                             <p className="text-sm opacity-80 mt-1">One-time License Fee</p>
@@ -306,20 +301,15 @@ export const ModelDetails = () => {
                     </div>
 
                     {/* Details and Description  */}
-                    <div className="lg:col-span-2 text-base-content"> {/* মেইন কন্টেন্ট টেক্সট */}
-
-                        {/* 🔑 ফিক্স ৪: হেডিং টেক্সট text-base-content */}
+                    <div className="lg:col-span-2 text-base-content">
                         <h1 className="text-5xl font-extrabold mb-4">{model.modelName}</h1>
 
-            {/* description section */}
-                        {/* 🔑 ফিক্স ৫: বর্ডার রং border-base-300 */}
+                    {/* description section */}
                         <div className="border-b border-base-300 pb-4 mb-4">
-                            {/* 🔑 ফিক্স ৬: সাবহেডিং টেক্সট text-base-content/80 */}
                             <h3 className="text-xl font-semibold text-base-content/80 mb-2">Description</h3>
                             
                             {model.description && model.description.length > DESCRIPTION_LIMIT ? (
                                 <>
-                                    {/* 🔑 ফিক্স ৭: ডেসক্রিপশন টেক্সট text-base-content/70 */}
                                     <p className="text-lg text-base-content/70 whitespace-pre-wrap">
                                         {isExpanded 
                                             ? model.description 
@@ -340,9 +330,6 @@ export const ModelDetails = () => {
 
 
                         <div className="grid grid-cols-2  gap-4 mb-6">
-
-                {/* All Detail Boxes */}
-                {/* 🔑 ফিক্স ৮: সকল ডিটেইল বক্সেস bg-base-200 এবং text-base-content ব্যবহার */}
                             
                             {/* Use Case */}
                             <div className="bg-base-200 p-3 rounded-lg md:col-span-2">
@@ -404,7 +391,6 @@ export const ModelDetails = () => {
                                 </Link>
                             )}
 
-                            {/* 🔑 ফিক্স ১০: ফুটনোট টেক্সট text-base-content/60 */}
                             <p className="text-sm text-base-content/60 mt-3 text-center">
                                 {isLoggedIn ? 'Your purchase is secured by Firebase Authentication.' : 'Authentication is required for all transactions.'}
                             </p>
@@ -415,7 +401,6 @@ export const ModelDetails = () => {
             
             {/* Confirmation Modal */}
             {showConfirmModal && (
-                /* 🔑 ফিক্স ১১: Modal ব্যাকগ্রাউন্ড এবং টেক্সট থিম-ভিত্তিক */
                 <div className="fixed inset-0 bg-base-content bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-base-100 p-8 rounded-xl shadow-2xl max-w-sm w-full text-base-content">
                         <h3 className="text-2xl font-bold mb-4">Confirm Purchase?</h3>

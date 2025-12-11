@@ -12,7 +12,6 @@ export const PurchaseHistory = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    // ⚠️ এই ভেরিয়েবলটি আপনার রিয়েল __app_id দিয়ে প্রতিস্থাপিত হতে পারে
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; 
 
     useEffect(() => {
@@ -45,7 +44,6 @@ export const PurchaseHistory = () => {
                     const data = doc.data();
                     let dateString = 'N/A';
                     
-                    // 🔑 ফিক্স: ডেট পার্সিং লজিক
                     if (data.purchaseDate && typeof data.purchaseDate.toDate === 'function') {
                         dateString = data.purchaseDate.toDate().toLocaleDateString('en-US', {
                              year: 'numeric',
@@ -132,7 +130,6 @@ export const PurchaseHistory = () => {
     
     if (error && !purchases.length) { 
          return (
-            /* 🔑 ফিক্স ২: এরর স্ক্রিনকে থিম-ভিত্তিক করা হলো */
             <div className="p-10 min-h-screen bg-base-200 text-base-content text-center">
                 <h1 className="text-3xl font-bold text-error">Error</h1>
                 <p className="mt-4 text-base-content/70">{error}</p>
@@ -143,7 +140,6 @@ export const PurchaseHistory = () => {
 
     if (!isLoggedIn) {
          return (
-            /* 🔑 ফিক্স ৩: এক্সেস ডিনায়েড স্ক্রিনকে থিম-ভিত্তিক করা হলো */
             <div className="p-10 min-h-screen bg-base-200 text-base-content text-center">
                 <h1 className="text-3xl font-bold text-warning">Access Denied</h1>
                 <p className="mt-4 text-base-content/70">Please log in to view your purchase history.</p>
@@ -153,7 +149,6 @@ export const PurchaseHistory = () => {
     }
 
     return (
-        /* 🔑 ফিক্স ৪: মেইন কন্টেইনার ব্যাকগ্রাউন্ড bg-base-200 */
         <div className="container mx-auto p-4 md:p-10 min-h-screen bg-base-200 text-base-content">
             <h1 className="text-4xl font-extrabold text-primary mb-8 border-b border-base-300 pb-4">
                 My Purchase History
@@ -167,9 +162,7 @@ export const PurchaseHistory = () => {
             )}
 
 
-            {/* 🔑 ফিক্স ৫: মেইন ডিটেইলস কার্ড bg-base-100 */}
             <div className="bg-base-100 p-6 rounded-xl shadow-lg">
-                {/* 🔑 ফিক্স ৬: টেক্সট রং text-base-content/70 */}
                 <div className="text-sm text-base-content/70 mb-6 border-b border-base-300 pb-4">
                     <p>Buyer Email: <strong className="text-primary">{user.email || 'N/A'}</strong></p>
                     <p>Total Purchases: <strong className="text-secondary font-bold">{purchases.length}</strong></p>
@@ -182,10 +175,8 @@ export const PurchaseHistory = () => {
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
-                        {/* 🔑 ফিক্স ৭: টেবিল ক্লাস bg-base-100 (অথবা bg-transparent) ব্যবহার করা হলো */}
                         <table className="table w-full">
                             <thead>
-                                {/* 🔑 ফিক্স ৮: হেডার ব্যাকগ্রাউন্ড bg-base-300, টেক্সট text-base-content */}
                                 <tr className="bg-base-300 text-base-content text-sm">
                                     <th>Image</th> 
                                     <th>Name</th>
@@ -198,7 +189,6 @@ export const PurchaseHistory = () => {
                             </thead>
                             <tbody>
                                 {purchases.map((p) => (
-                                    /* 🔑 ফিক্স ৯: বডি রোর ব্যাকগ্রাউন্ড (bg-base-100 দ্বারা নিয়ন্ত্রিত) */
                                     <tr key={p.id}>
                                         {/* Image */}
                                         <td>
@@ -214,7 +204,6 @@ export const PurchaseHistory = () => {
                                         </td>
                                         
                                         {/* Name */}
-                                        {/* 🔑 ফিক্স ১০: টেক্সট রং text-base-content */}
                                         <td className="font-semibold text-base-content text-center">
                                             {p.modelName}
                                         </td>
@@ -228,25 +217,22 @@ export const PurchaseHistory = () => {
                                         
                                         {/* Use Case*/}
                                         <td>
-                                            {/* 🔑 ফিক্স ১১: টেক্সট রং text-base-content/70 */}
                                             <span className='text-xs text-base-content/70 max-w-[100px] inline-block truncate'>
                                                 {p.modelDetails?.useCase || 'N/A'}
                                             </span>
                                         </td>
                                         
                                         {/* Developer Email) */}
-                                        {/* 🔑 ফিক্স ১২: টেক্সট রং text-base-content/70 */}
                                         <td className="text-base-content/70 text-xs font-mono">
                                             {p.developerEmail}
                                         </td>
                                         
-                                       
-                                        {/* 🔑 ফিক্স ১৩: টেক্সট রং text-base-content/70 */}
+                                        {/*purchase   */}
                                         <td className='text-sm font-medium text-base-content/70 text-center'>
                                             {p.purchaseDate}
                                         </td>
                                         
-
+                                        {/* details button */}
                                         <td>
                                             <Link 
                                                 to={`/app/model/${p.modelId}`} 
