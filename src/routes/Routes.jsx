@@ -7,8 +7,8 @@ import PrivateRoute from "./PrivateRoute";
 import WelcomeScreen from "../pages/Welcome/WelcomeScreen";
 // Error Page
 import ErrorPage from "../pages/NotFound/NotFound404";  
-import {Login} from "../pages/auth/Login";
-import Register from "../pages/auth/Register";
+// import {Login} from "../pages/auth/Login";
+// import Register from "../pages/auth/Register";
 
 import {Home} from "../pages/Home/Home";
 
@@ -22,6 +22,8 @@ import {ModelDetails} from "../pages/Model/ModelDetails";
 
 import ProfileUpdate from "../pages/ProfileUpdate/ProfileUpdate"; 
 import AllModels from "../pages/Model/AllModels";
+import { Login } from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
 
 const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,7 +49,7 @@ const Routes = createBrowserRouter([
     
     { 
         path: "login", 
-        element: <Login /> 
+        element: < Login/> 
     },
     { 
         path: "register", 
