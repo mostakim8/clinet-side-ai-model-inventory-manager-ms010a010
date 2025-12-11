@@ -49,11 +49,11 @@ const Routes = createBrowserRouter([
     
     { 
         path: "login", 
-        element: < Login/> 
+        element: < login/> 
     },
     { 
         path: "register", 
-        element: <Register/> 
+        element: <register/> 
     },
 
     {
