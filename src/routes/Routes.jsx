@@ -22,8 +22,8 @@ import {ModelDetails} from "../pages/Model/ModelDetails";
 
 import ProfileUpdate from "../pages/ProfileUpdate/ProfileUpdate"; 
 import AllModels from "../pages/Model/AllModels";
-import { Login } from "../pages/auth/Login.jsx";
-import Register from "../pages/auth/Register.jsx";
+import { Login } from "../pages/auth/login.jsx";
+import Register from "../pages/auth/register.jsx";
 
 const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
