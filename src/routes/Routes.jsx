@@ -23,7 +23,7 @@ import {ModelDetails} from "../pages/Model/ModelDetails";
 import ProfileUpdate from "../pages/ProfileUpdate/ProfileUpdate"; 
 import AllModels from "../pages/Model/AllModels";
 
-const SERVER_BASE_URL = 'http://localhost:5001';
+const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const updateModelLoader = async ({ params }) => {
 

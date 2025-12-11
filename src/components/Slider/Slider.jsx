@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom'; 
 
-const SERVER_BASE_URL = 'http://localhost:5001'; 
+const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 
 const fetchLatestModels = async () => {

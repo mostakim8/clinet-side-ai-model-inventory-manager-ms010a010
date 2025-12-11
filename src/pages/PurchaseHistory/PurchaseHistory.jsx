@@ -3,7 +3,7 @@ import { useAuth } from '../../providers/AuthProvider.jsx';
 import { collection, query, getDocs } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 
-const SERVER_BASE_URL = 'http://localhost:5001'; 
+const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 export const PurchaseHistory = () => {
     const { user, isLoading: isAuthLoading, db, isLoggedIn } = useAuth();

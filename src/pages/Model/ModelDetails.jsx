@@ -4,7 +4,7 @@ import { useAuth } from '../../providers/AuthProvider.jsx';
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 
-const SERVER_BASE_URL = 'http://localhost:5001';
+const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Mock Data Fallback (unchanged)
 const MOCK_MODEL = {

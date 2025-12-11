@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider.jsx'; 
 import { toast } from 'react-hot-toast'; 
 
-const SERVER_BASE_URL = 'http://localhost:5001'; 
+const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 
 export const AddModel = () => {

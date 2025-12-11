@@ -4,7 +4,7 @@ import { useAuth } from '../../providers/AuthProvider';
 import { getAuth } from "firebase/auth";
 import { Helmet } from 'react-helmet-async';
 
-const SERVER_BASE_URL = 'http://localhost:5001'; 
+const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const UpdateModel = () => {
     
