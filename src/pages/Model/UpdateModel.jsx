@@ -102,7 +102,7 @@ const UpdateModel = () => {
 
       if (res.ok) {
         showToast("Save changes", "success");
-        setTimeout(() => navigate("/models"), 2000);
+        setTimeout(() => navigate("/app/my-models"), 2000);
       }
     } catch (error) {
       console.error(error);
