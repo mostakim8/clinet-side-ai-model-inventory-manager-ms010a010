@@ -33,8 +33,6 @@ export const PurchaseHistory = () => {
                 return;
             }
 
-            // const historyCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/purchases`);
-
             const historyCollectionRef=collection (db, `purchase/${userId}/history`)
             let fetchedPurchases = [];
             
@@ -75,7 +73,9 @@ export const PurchaseHistory = () => {
                 
             } catch (err) {
                 console.error("Error fetching purchase history:", err);
-                setError("Failed to load purchase history. Check console for details.");
+                setError(
+                  "You haven’t purchased any models yet. Your purchase list is empty.",
+                );
                 setIsLoading(false);
                 return;
             }
@@ -108,7 +108,7 @@ export const PurchaseHistory = () => {
             } catch (err) {
                  console.error("Error fetching model details:", err);
                  setPurchases(fetchedPurchases);
-                 setError("Warning: Could not fetch detailed model info (Framework/Image). Displaying basic history.");
+                 setError("Warning: Could not fetch detailed model info (Framework/Image).");
             } finally {
                 setIsLoading(false);
             }
@@ -132,9 +132,9 @@ export const PurchaseHistory = () => {
     if (error && !purchases.length) { 
          return (
             <div className="p-10 min-h-screen bg-base-200 text-base-content text-center">
-                <h1 className="text-3xl font-bold text-error">Error</h1>
+                <h1 className="text-3xl font-bold text-error">Purchase History</h1>
                 <p className="mt-4 text-base-content/70">{error}</p>
-                <Link to="/" className="btn btn-primary mt-6">Go to Home</Link>
+                <Link to="/app" className="btn btn-primary mt-6">Back to Home</Link>
             </div>
         );
     }

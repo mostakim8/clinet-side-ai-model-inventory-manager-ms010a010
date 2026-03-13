@@ -90,7 +90,6 @@ export const AddModel = () => {
           onSubmit={handleAddModel}
           className="card-body grid grid-cols-1 md:grid-cols-2 gap-8 p-10 mx-auto"
         >
-          {/* Helper function to generate floating label input */}
           {/* Model Name */}
           <div className="form-control relative mb-2">
             <label
