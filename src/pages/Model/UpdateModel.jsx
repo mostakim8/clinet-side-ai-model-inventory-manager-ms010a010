@@ -8,8 +8,6 @@ const SERVER_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const UpdateModel = () => {
   const modelToUpdate = useLoaderData();
-
-  // model items (Destructured framework)
   const {
     _id,
     modelName,
@@ -18,7 +16,7 @@ const UpdateModel = () => {
     imageUrl,
     useCase,
     dataset,
-    framework, // 👈 Added framework here
+    framework,
   } = modelToUpdate || {};
 
   const { user } = useAuth();
@@ -29,69 +27,70 @@ const UpdateModel = () => {
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
   const [modelNameFocused, setModelNameFocused] = useState(false);
-  const [frameworkFocused, setFrameworkFocused] = useState(false); // 👈 Added focus state
-  const [imageUrlFocused, setImageUrlFocused] = useState(false);
-  const [descriptionFocused, setDescriptionFocused] = useState(false);
+  const [frameworkFocused, setFrameworkFocused] = useState(false);
 
   const showToast = (message, type) => {
     setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: "", type: "" }), 4000);
+    setTimeout(() => setToast({ show: false, message: "", type: "" }), 3000);
   };
 
+  // --- Toast Notification (Top-Right with Animation) ---
   const ToastNotification = () => {
     if (!toast.show) return null;
-
-    let colorClass = "alert-info";
-    if (toast.type === "success") {
-      colorClass = "alert-success";
-    } else if (toast.type === "error") {
-      colorClass = "alert-error";
-    }
-
     return (
-      <div className="toast toast-end z-50">
-        <div
-          className={`alert ${colorClass} transition duration-300 shadow-xl`}
-        >
-          <span>{toast.message}</span>
+      <div className="toast toast-top toast-end z-[100] animate-bounce">
+        <div className="alert alert-success shadow-2xl border-2 border-white">
+          <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="font-bold text-white">{toast.message}</span>
+          </div>
         </div>
       </div>
     );
   };
 
-  if (!modelToUpdate) {
+  // --- Loading Overlay (Center of the Page) ---
+  const LoadingOverlay = () => {
+    if (!isSubmitting) return null;
     return (
-      <div className="text-center py-20 text-xl text-error bg-base-100 min-h-screen">
-        Error: Model data could not be loaded.
+      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-base-300/60 backdrop-blur-sm">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+        <p className="mt-4 text-xl font-bold text-primary animate-pulse">
+          Updating...
+        </p>
       </div>
     );
-  }
+  };
 
   const handleUpdateModel = async (e) => {
     e.preventDefault();
-
-    if (!user) {
-      showToast("Authentication required.", "error");
-      return;
-    }
-
     setIsSubmitting(true);
-    const form = e.target;
 
+    const form = e.target;
     const updatedModel = {
       modelName: form.modelName.value,
       description: form.description.value,
       category: form.category.value,
-      framework: form.framework.value, // 👈 Capture updated framework
+      framework: form.framework.value,
       imageUrl: form.imageUrl.value,
       useCase: useCase,
       dataset: dataset,
     };
 
     try {
-      const currentUser = auth.currentUser;
-      const token = await currentUser.getIdToken();
-
+      const token = await auth.currentUser.getIdToken();
       const res = await fetch(`${SERVER_BASE_URL}/models/${_id}`, {
         method: "PATCH",
         headers: {
@@ -102,39 +101,39 @@ const UpdateModel = () => {
       });
 
       if (res.ok) {
-        // 👈 Updated toast message to "Save changes"
         showToast("Save changes", "success");
-        setTimeout(() => navigate("/models"), 1500);
+        setTimeout(() => navigate("/models"), 2000);
       }
     } catch (error) {
-      showToast(`Update Failed: ${error.message}`, "error");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const labelBgClass = " bg-base-100 ";
-
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 md:p-8 bg-base-200">
+    <div className="min-h-screen relative flex items-center justify-center p-4 md:p-8 bg-base-200">
       <Helmet>
         <title>Update Model - {modelName}</title>
       </Helmet>
-      <ToastNotification />
 
-      <div className="w-full max-w-4xl mx-auto my-10 p-8 bg-base-100 text-base-content rounded-xl border border-base-300 shadow-2xl">
+      <ToastNotification />
+      <LoadingOverlay />
+
+      <div
+        className={`w-full max-w-4xl mx-auto my-10 p-8 bg-base-100 rounded-xl border border-base-300 shadow-2xl transition-all ${isSubmitting ? "blur-sm pointer-events-none" : ""}`}
+      >
         <h1 className="text-4xl font-extrabold text-center mb-8 text-primary">
-          Edit AI Model: <span className="text-secondary">{modelName}</span>
+          Edit AI Model
         </h1>
 
         <form
           onSubmit={handleUpdateModel}
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {/* Model Name */}
           <div className="form-control relative">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ${labelBgClass} ${modelNameFocused || modelName ? "text-secondary -translate-y-1/2 px-1 z-10 left-3 text-[11px]" : "text-base-content/70 mt-2 left-3"}`}
+              className={`absolute top-0 font-bold transition-all bg-base-100 ${modelNameFocused || modelName ? "text-secondary -translate-y-1/2 px-1 z-10 left-3 text-[11px]" : "mt-2 left-3"}`}
             >
               Model Name
             </label>
@@ -142,17 +141,16 @@ const UpdateModel = () => {
               type="text"
               name="modelName"
               defaultValue={modelName}
-              className="input w-full bg-base-200 border-base-300 pt-4"
+              className="input w-full bg-base-200"
               onFocus={() => setModelNameFocused(true)}
               onBlur={(e) => setModelNameFocused(e.target.value !== "")}
               required
             />
           </div>
 
-          {/* Framework 👈 NEW FIELD ADDED */}
           <div className="form-control relative">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ${labelBgClass} ${frameworkFocused || framework ? "text-secondary -translate-y-1/2 px-1 z-10 left-3 text-[11px]" : "text-base-content/70 mt-2 left-3"}`}
+              className={`absolute top-0 font-bold transition-all bg-base-100 ${frameworkFocused || framework ? "text-secondary -translate-y-1/2 px-1 z-10 left-3 text-[11px]" : "mt-2 left-3"}`}
             >
               Framework
             </label>
@@ -160,84 +158,61 @@ const UpdateModel = () => {
               type="text"
               name="framework"
               defaultValue={framework}
-              className="input w-full bg-base-200 border-base-300 pt-4"
+              className="input w-full bg-base-200"
               onFocus={() => setFrameworkFocused(true)}
               onBlur={(e) => setFrameworkFocused(e.target.value !== "")}
               required
             />
           </div>
 
-          {/* Category */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text font-semibold text-base-content/70">
-                Category
-              </span>
+              <span className="label-text font-semibold">Category</span>
             </label>
             <select
               name="category"
-              className="select select-bordered bg-base-200"
+              className="select select-bordered"
               defaultValue={category}
               required
             >
-              <option value="LLM">Large Language Model (LLM)</option>
+              <option value="LLM">LLM</option>
               <option value="Image Gen">Image Generation</option>
               <option value="Audio/Speech">Audio/Speech</option>
               <option value="Data Analysis">Data Analysis</option>
-              <option value="Other">Other</option>
             </select>
           </div>
 
-          {/* Image URL */}
-          <div className="form-control relative mt-6">
-            <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ${labelBgClass} ${imageUrlFocused || imageUrl ? "text-accent -translate-y-1/2 px-1 z-10 left-3 text-[11px]" : "text-base-content/70 pt-4 left-3"}`}
-            >
-              Image URL
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Image URL</span>
             </label>
             <input
               type="url"
               name="imageUrl"
               defaultValue={imageUrl}
-              className="input w-full bg-base-200 border-accent border-2 pt-4"
-              onFocus={() => setImageUrlFocused(true)}
-              onBlur={(e) => setImageUrlFocused(e.target.value !== "")}
+              className="input input-bordered"
               required
             />
           </div>
 
-          {/* Description */}
-          <div className="form-control md:col-span-2 relative">
-            <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ${labelBgClass} ${descriptionFocused || description ? "text-secondary -translate-y-1/2 px-1 z-10 left-3 text-[11px]" : "text-base-content/70 pt-4 left-3"}`}
-            >
-              Model Description
+          <div className="form-control md:col-span-2">
+            <label className="label">
+              <span className="label-text font-semibold">Description</span>
             </label>
             <textarea
               name="description"
               defaultValue={description}
-              className="textarea textarea-bordered h-32 w-full bg-base-200 pt-8"
-              onFocus={() => setDescriptionFocused(true)}
-              onBlur={(e) => setDescriptionFocused(e.target.value !== "")}
+              className="textarea textarea-bordered h-32"
               required
             ></textarea>
           </div>
 
-          {/* Submit Button 👈 Updated Loading state */}
           <div className="form-control mt-6 md:col-span-2">
             <button
               type="submit"
-              className="btn btn-secondary w-full text-secondary-content font-bold rounded-xl shadow-lg"
-              disabled={isSubmitting}
+              className="btn btn-secondary w-full font-bold"
             >
-              {isSubmitting ? (
-                <>
-                  <span className="loading loading-spinner"></span>
-                  Updating...
-                </>
-              ) : (
-                "Save Model Updates"
-              )}
+              Save Model Updates
             </button>
           </div>
         </form>
