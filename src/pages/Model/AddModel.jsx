@@ -56,7 +56,7 @@ export const AddModel = () => {
 
       if (!response.ok) throw new Error("Failed to add model");
 
-      toast.success("Add Model Successfull"); // সাকসেস টোস্ট
+      toast.success("Add Model Successful");
       form.reset();
       navigate("/app/my-models");
     } catch (error) {
@@ -66,7 +66,8 @@ export const AddModel = () => {
     }
   };
 
-  const labelBgClass = " bg-base-100! ";
+  // Tailwind class for label background
+  const labelBgClass = " bg-base-100 ";
 
   return (
     <div className="min-h-screen flex items-center bg-base-200 relative">
@@ -89,90 +90,118 @@ export const AddModel = () => {
           onSubmit={handleAddModel}
           className="card-body grid grid-cols-1 md:grid-cols-2 gap-8 p-10 mx-auto"
         >
-          {/* Input Fields */}
+          {/* Helper function to generate floating label input */}
+          {/* Model Name */}
           <div className="form-control relative mb-2">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all ${labelBgClass} ${modelNameFocused ? "text-primary -translate-y-1/2 left-3 text-[11px]" : "mt-2 left-3"}`}
+              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} px-1 ${
+                modelNameFocused
+                  ? "text-primary -translate-y-1/2 z-10 left-3 text-[11px] rounded"
+                  : "text-base-content/70 opacity-80 mt-2 left-3"
+              }`}
             >
               Model Name
             </label>
             <input
               type="text"
               name="modelName"
-              className="input w-full bg-transparent border border-base-300 pt-4"
+              className="input w-full bg-transparent border border-base-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-2"
               onFocus={() => setModelNameFocused(true)}
-              onBlur={(e) => setModelNameFocused(e.target.value !== "")}
+              onBlur={(e) => setModelNameFocused(e.target.value.trim() !== "")}
               required
             />
           </div>
 
+          {/* Framework */}
           <div className="form-control relative mb-2">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all ${labelBgClass} ${frameworkFocused ? "text-primary -translate-y-1/2 left-3 text-[11px]" : "mt-2 left-3"}`}
+              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} px-1 ${
+                frameworkFocused
+                  ? "text-primary -translate-y-1/2 z-10 left-3 text-[11px] rounded"
+                  : "text-base-content/70 opacity-80 mt-2 left-3"
+              }`}
             >
               Framework
             </label>
             <input
               type="text"
               name="framework"
-              className="input w-full bg-transparent border border-base-300 pt-4"
+              className="input w-full bg-transparent border border-base-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-2"
               onFocus={() => setFrameworkFocused(true)}
-              onBlur={(e) => setFrameworkFocused(e.target.value !== "")}
+              onBlur={(e) => setFrameworkFocused(e.target.value.trim() !== "")}
               required
             />
           </div>
 
+          {/* Use Case */}
           <div className="form-control relative mb-2">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all ${labelBgClass} ${useCaseFocused ? "text-primary -translate-y-1/2 left-3 text-[11px]" : "mt-2 left-3"}`}
+              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} px-1 ${
+                useCaseFocused
+                  ? "text-primary -translate-y-1/2 z-10 left-3 text-[11px] rounded"
+                  : "text-base-content/70 opacity-80 mt-2 left-3"
+              }`}
             >
               Use Case
             </label>
             <input
               type="text"
               name="useCase"
-              className="input w-full bg-transparent border border-base-300 pt-4"
+              className="input w-full bg-transparent border border-base-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-2"
               onFocus={() => setUseCaseFocused(true)}
-              onBlur={(e) => setUseCaseFocused(e.target.value !== "")}
+              onBlur={(e) => setUseCaseFocused(e.target.value.trim() !== "")}
               required
             />
           </div>
 
+          {/* Dataset */}
           <div className="form-control relative mb-2">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all ${labelBgClass} ${datasetFocused ? "text-primary -translate-y-1/2 left-3 text-[11px]" : "mt-2 left-3"}`}
+              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} px-1 ${
+                datasetFocused
+                  ? "text-primary -translate-y-1/2 z-10 left-3 text-[11px] rounded"
+                  : "text-base-content/70 opacity-80 mt-2 left-3"
+              }`}
             >
               Dataset
             </label>
             <input
               type="text"
               name="dataset"
-              className="input w-full bg-transparent border border-base-300 pt-4"
+              className="input w-full bg-transparent border border-base-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-2"
               onFocus={() => setDatasetFocused(true)}
-              onBlur={(e) => setDatasetFocused(e.target.value !== "")}
+              onBlur={(e) => setDatasetFocused(e.target.value.trim() !== "")}
               required
             />
           </div>
 
+          {/* Image URL */}
           <div className="form-control relative mb-2">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all ${labelBgClass} ${imageUrlFocused ? "text-primary -translate-y-1/2 left-3 text-[11px]" : "mt-2 left-3"}`}
+              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} px-1 ${
+                imageUrlFocused
+                  ? "text-primary -translate-y-1/2 z-10 left-3 text-[11px] rounded"
+                  : "text-base-content/70 opacity-80 mt-2 left-3"
+              }`}
             >
-              Image URL
+              Image URL (ImgBB Link)
             </label>
             <input
               type="url"
               name="imageUrl"
-              className="input w-full bg-transparent border border-base-300 pt-4"
+              className="input w-full bg-transparent border border-base-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-2"
               onFocus={() => setImageUrlFocused(true)}
-              onBlur={(e) => setImageUrlFocused(e.target.value !== "")}
+              onBlur={(e) => setImageUrlFocused(e.target.value.trim() !== "")}
               required
             />
           </div>
 
+          {/* Category */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text font-semibold">Category</span>
+              <span className="label-text font-semibold text-base-content/70">
+                Category
+              </span>
             </label>
             <select
               name="category"
@@ -183,20 +212,28 @@ export const AddModel = () => {
               <option value="Image Gen">Image Generation</option>
               <option value="Audio/Speech">Audio/Speech</option>
               <option value="Data Analysis">Data Analysis</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
+          {/* Description */}
           <div className="form-control md:col-span-2 relative mb-2">
             <label
-              className={`absolute top-0 pointer-events-none font-bold transition-all ${labelBgClass} ${descriptionFocused ? "text-primary -translate-y-1/2 left-3 text-[11px]" : "pt-4 left-3"}`}
+              className={`absolute top-0 pointer-events-none font-bold transition-all duration-300 ease-in-out ${labelBgClass} px-1 ${
+                descriptionFocused
+                  ? "text-primary -translate-y-1/2 z-10 left-3 text-[11px] rounded"
+                  : "text-base-content/70 opacity-80 mt-2 left-3"
+              }`}
             >
               Model Description
             </label>
             <textarea
               name="description"
-              className="textarea textarea-bordered w-full bg-transparent border-base-300 pt-8"
+              className="textarea textarea-bordered h-32 w-full bg-transparent border-base-300 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none pt-8"
               onFocus={() => setDescriptionFocused(true)}
-              onBlur={(e) => setDescriptionFocused(e.target.value !== "")}
+              onBlur={(e) =>
+                setDescriptionFocused(e.target.value.trim() !== "")
+              }
               required
             ></textarea>
           </div>
@@ -215,4 +252,5 @@ export const AddModel = () => {
     </div>
   );
 };
+
 export default AddModel;
