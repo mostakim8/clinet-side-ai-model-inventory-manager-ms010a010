@@ -72,9 +72,10 @@ export const AllModels = () => {
     }
 
     
-    const filteredModels = models.filter(model =>
-        model.modelName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (model.category && model.category.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredModels = models.filter(
+      (model) =>
+        model.framework &&
+        model.framework.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     let displayModels = filteredModels; 
@@ -100,7 +101,7 @@ export const AllModels = () => {
                     <label className="input input-bordered flex w-full items-center gap-2 input-md shadow-md bg-transparent border-base-content/20 text-base-content ">
                         <input
                             type="text"
-                            placeholder="Search models by name or category..."
+                            placeholder="Search models by framework..."
                             className="grow placeholder-base-900 
                             text-gray-400
                             dark:bg-transparent border-none  focus:outline-none "
