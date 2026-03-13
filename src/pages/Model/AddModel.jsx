@@ -215,3 +215,4 @@ export const AddModel = () => {
     </div>
   );
 };
+export default AddModel;
