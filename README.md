@@ -1,17 +1,61 @@
-# React + Vite
+# AI Model Inventory & Marketplace - Client Side
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive, feature-rich full-stack web application designed for discovering, purchasing, and managing custom AI models. Built with **React, Tailwind CSS, and Firebase**, this client application features dynamic filtering, secure multi-role access, real-time inventory tracking, and seamless payment workflows.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo & Server Repository
 
-## React Compiler
+* **Live Application:** [AI Model Marketplace Live](https://dulcet-fox-ad01e1.netlify.app/app)
+* **Server Repository:** [GitHub Backend Repository](https://github.com/mostakim8/-server-side-aI-model-inventory-manager-ms010a010-.git)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+##  Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# -Clinet_Side-AI-_Model_Inventory_Manager_MS010A010
+* **AI Model Showcase & Filtering:** Browse, search, and view detailed specifications of custom AI models.
+* **Role-Based Dashboards:** Distinct interface views and action privileges for Admins and regular Users.
+* **Secure Authentication:** User sign-up, sign-in, and persistent session handling powered by Firebase Auth.
+* **Real-time Synchronization:** Instant state updates for purchases and inventory changes without page reloads.
+* **Transaction Gateways:** Streamlined checkout process integrated with secure payment handling.
+* **Responsive Modern UI:** Clean, pixel-perfect glassmorphic design system using Tailwind CSS and DaisyUI.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend Framework:** React.js
+* **Styling & UI Components:** Tailwind CSS, DaisyUI
+* **Authentication & Database:** Firebase Auth, Firestore
+* **Data Fetching & State:** TanStack Query (React Query), Axios
+* **Icons & Animation:** React Icons, Framer Motion
+
+---
+
+## ⚙️ Environment Variables Setup
+
+To run this client-side application locally, create a `.env.local` file in the root directory and add your Firebase credentials:
+
+```env
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
+```
+
+## 💻 Local Setup & Installation
+Clone the repository:
+
+* Bash
+* git clone [https://github.com/mostakim8/clinet-side-ai-model-inventory-manager-ms010a010.git](https://github.com/mostakim8/clinet-side-ai-model-inventory-manager-ms010a010.git)
+* cd clinet-side-ai-model-inventory-manager-ms010a010
+  
+Install dependencies:
+* Bash
+* npm install
+  
+Start the development server:
+* Bash
+* npm run dev
